@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restauration", "Restauration.csproj", "{1CD59348-6962-4CB4-9E0A-8AD69E3642B9}"
 EndProject
 Global
