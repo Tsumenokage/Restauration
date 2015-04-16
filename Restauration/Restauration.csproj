@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formule.cs" />
+    <Compile Include="FormuleConsommation.cs" />
+    <Compile Include="FormuleEmporter.cs" />
+    <Compile Include="FormuleGastronomique.cs" />
+    <Compile Include="FormuleNormale.cs" />
+    <Compile Include="FormuleRapide.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Table.cs" />
