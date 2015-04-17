@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Restauration
 {
-    class FormuleEmporter
+    class FormuleEmporter : Formule
     {
         public FormuleEmporter(double dureePresence, double dureePreparation, double prix) : base(dureePresence, dureePreparation, prix) { }
         public override string ToString()

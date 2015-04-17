@@ -9,16 +9,13 @@ namespace Restauration
     abstract class Table
     {
         //champs nécessaires à la création d'une classe table
-        protected static int _numTableTotal = 0; //numéro total de table dans le restaurant
         protected int _numTable { get; set; } //numéro de la table
         protected int _nbPlacesMin { get; set; } //nombre de place minimum de la table
         protected int _nbPlacesMax { get; set; } //nombre de place maximum de la table
-        protected string _jumelage { get; set; } //O ou N en fonction de si la table peut être jumelée ou non
-        public Table(int nbPlaceMin, int nbPlaceMax, string jumelage)//contructeur de la classe table
+        protected bool _jumelage { get; set; } //O ou N en fonction de si la table peut être jumelée ou non
+        public Table(int numTable, int nbPlaceMin, int nbPlaceMax, bool jumelage)//contructeur de la classe table
         {
-            //le numéro de la table est automatiquement attribué
-            _numTableTotal++;
-            _numTable = _numTableTotal;
+            _numTable = numTable;
             _nbPlacesMin = nbPlaceMin;
             _nbPlacesMax = nbPlaceMax;
             _jumelage = jumelage;
