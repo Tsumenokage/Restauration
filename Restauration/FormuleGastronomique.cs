@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Restauration
 {
-    class FormuleGastronomique
+    class FormuleGastronomique : Formule
     {
         public FormuleGastronomique(double dureePresence, double dureePreparation, double prix) : base(dureePresence, dureePreparation, prix) { }
         public override string ToString()
