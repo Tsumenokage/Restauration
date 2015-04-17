@@ -51,6 +51,7 @@
     <Compile Include="FormuleRapide.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reservation.cs" />
     <Compile Include="Restaurant.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TableCarree.cs" />
