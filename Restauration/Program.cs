@@ -22,17 +22,7 @@ namespace Restauration
 
             while (!quitteLogiciel)
             {
-                Console.Clear();
-                Console.WriteLine("******************************************");
-                Console.WriteLine(restaurant._nomRestaurant);
-                Console.WriteLine("******************************************");
-                Console.WriteLine("Veuillez sélectionner une action à effectuer");
-                Console.WriteLine("[1] Gestion des reservation");
-                Console.WriteLine("[2] Gstion des tables");
-                Console.WriteLine("[3] Gestion des des formules");
-                Console.WriteLine("[4] Quitter le logiciel");
-
-                int choix = int.Parse(Console.ReadLine());
+                int choix = choixUtilisateur(restaurant); 
                 switch (choix)
                 {
                     case 1:
@@ -47,14 +37,29 @@ namespace Restauration
                     case 4:
                         quitteLogiciel = true;
                         break;
-                    default:
-                        Console.WriteLine("Erreur dans le choix");
-                        break;
                 }
+
             }
 
             Console.WriteLine("Merci d'avoir utilisé notre logiciel");
             Console.ReadLine();
+        }
+        public static int choixUtilisateur(Restaurant restaurant)
+        {
+            int choix;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(restaurant._nomRestaurant);
+                Console.WriteLine("******************************************");   
+                Console.WriteLine("Veuillez sélectionner une action à effectuer");
+                Console.WriteLine("[1] Gestion des reservation");
+                Console.WriteLine("[2] Gestion des tables");
+                Console.WriteLine("[3] Gestion des des formules");
+                Console.WriteLine("[4] Quitter le logiciel");
+            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 4 || choix < 0);
+            return choix;
         }
 
         static bool MenuBase()
