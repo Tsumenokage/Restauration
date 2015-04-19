@@ -22,14 +22,26 @@ namespace Restauration
 
             while (!quitteLogiciel)
             {
-                int choix = choixUtilisateur(restaurant); 
+                int choix = choixMenuPrincipal(restaurant); 
                 switch (choix)
                 {
                     case 1:
                         Console.WriteLine("WIP");
                         break;
                     case 2:
-                        Console.WriteLine("WIP");
+                        int choixTable = choixMenuTable(restaurant);
+                        switch (choixTable)
+                        {
+                            case 21:
+                                Console.WriteLine("WIP");
+                                break;
+                            case 22:
+                                AjouterTable(restaurant);
+                                break;
+                            case 23:
+                                Console.WriteLine("WIP");
+                                break;
+                        }
                         break;
                     case 3:
                         Console.WriteLine("WIP");
@@ -44,24 +56,6 @@ namespace Restauration
             Console.WriteLine("Merci d'avoir utilisé notre logiciel");
             Console.ReadLine();
         }
-        public static int choixUtilisateur(Restaurant restaurant)
-        {
-            int choix;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("******************************************");
-                Console.WriteLine(restaurant._nomRestaurant);
-                Console.WriteLine("******************************************");   
-                Console.WriteLine("Veuillez sélectionner une action à effectuer");
-                Console.WriteLine("[1] Gestion des reservation");
-                Console.WriteLine("[2] Gestion des tables");
-                Console.WriteLine("[3] Gestion des des formules");
-                Console.WriteLine("[4] Quitter le logiciel");
-            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 4 || choix < 0);
-            return choix;
-        }
-
         static bool MenuBase()
         {
             while(true)
@@ -82,7 +76,6 @@ namespace Restauration
                         break;
                 }
             }
-
         }
 
         static Restaurant nouveauRestaurant()
@@ -93,6 +86,54 @@ namespace Restauration
             Restaurant restaurant = new Restaurant(nomRestaurant);
 
             return restaurant;
+        }
+        public static int choixMenuPrincipal(Restaurant restaurant)
+        {
+            int choix;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(restaurant._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Veuillez sélectionner une action à effectuer");
+                Console.WriteLine("[1] Gestion des reservation");
+                Console.WriteLine("[2] Gestion des tables");
+                Console.WriteLine("[3] Gestion des des formules");
+                Console.WriteLine("[4] Quitter le logiciel");
+            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 4 || choix < 0);
+            return choix;
+        }
+        public static int choixMenuTable(Restaurant restaurant)
+        {
+            int choixTable;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(restaurant._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Veuillez sélectionner une action à effectuer");
+                Console.WriteLine("[21] Tables existantes");
+                Console.WriteLine("[22] Ajout de tables");
+                Console.WriteLine("[23] Supression de table");
+                Console.WriteLine("[24] Retour au menu principal");
+            } while (!int.TryParse(Console.ReadLine(), out choixTable) || choixTable > 24 || choixTable < 20);
+            return choixTable;
+        }
+        public static void AjouterTable(Restaurant R)
+        {
+            Console.WriteLine("Voulez-vous continuer une table carrée(C), ronde(O) ou rectangulaire(R) ?");
+            ConsoleKeyInfo saisie = Console.ReadKey(true);
+            if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.R)//ne distingue pas les majuscules ou minuscules...
+            {
+                Console.WriteLine("On continue ...");
+            }
+            else
+            {
+                Console.WriteLine("On s'arrête ...");
+            }
+            Console.ReadLine();
         }
     }
 }
