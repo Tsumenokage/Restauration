@@ -123,15 +123,22 @@ namespace Restauration
         }
         public static void AjouterTable(Restaurant R)
         {
-            Console.WriteLine("Voulez-vous continuer une table carrée(C), ronde(O) ou rectangulaire(R) ?");
+            Restaurant restaurant = R;
+            Console.Clear();
+            Console.WriteLine("******************************************");
+            Console.WriteLine(restaurant._nomRestaurant);
+            Console.WriteLine("******************************************");
+            Console.WriteLine("[2] Gestion des tables");
+            Console.WriteLine("Voulez-vous continuer une table carrée(c), ronde(o) ou rectangulaire(r) ?");
             ConsoleKeyInfo saisie = Console.ReadKey(true);
-            if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.R)//ne distingue pas les majuscules ou minuscules...
+            if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.R || saisie.Key == ConsoleKey.O)//ne distingue pas les majuscules ou minuscules...
             {
                 Console.WriteLine("On continue ...");
             }
             else
             {
-                Console.WriteLine("On s'arrête ...");
+               Console.Clear();
+               AjouterTable(restaurant);
             }
             Console.ReadLine();
         }
