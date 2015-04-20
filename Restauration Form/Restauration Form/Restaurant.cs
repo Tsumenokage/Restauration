@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Restauration
+namespace Restauration_Form
 {
     class Restaurant
     {
