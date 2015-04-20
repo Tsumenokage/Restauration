@@ -32,13 +32,13 @@ namespace Restauration
                         int choixTable = choixMenuTable(restaurant);
                         switch (choixTable)
                         {
-                            case 21:
+                            case 1:
                                 Console.WriteLine("WIP");
                                 break;
-                            case 22:
+                            case 2:
                                 restaurant.AjoutTable();
                                 break;
-                            case 23:
+                            case 3:
                                 Console.WriteLine("WIP");
                                 break;
                         }
@@ -114,11 +114,11 @@ namespace Restauration
                 Console.WriteLine(restaurant._nomRestaurant);
                 Console.WriteLine("******************************************");
                 Console.WriteLine("Veuillez sélectionner une action à effectuer");
-                Console.WriteLine("[21] Tables existantes");
-                Console.WriteLine("[22] Ajout de tables");
-                Console.WriteLine("[23] Supression de table");
-                Console.WriteLine("[24] Retour au menu principal");
-            } while (!int.TryParse(Console.ReadLine(), out choixTable) || choixTable > 24 || choixTable < 20);
+                Console.WriteLine("[1] Tables existantes");
+                Console.WriteLine("[2] Ajout de tables");
+                Console.WriteLine("[3] Supression de table");
+                Console.WriteLine("[4] Retour au menu principal");
+            } while (!int.TryParse(Console.ReadLine(), out choixTable) || choixTable > 4 || choixTable < 0);
             return choixTable;
         }
     }

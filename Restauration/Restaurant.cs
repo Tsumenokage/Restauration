@@ -25,12 +25,20 @@ namespace Restauration
             Console.WriteLine("******************************************");
             Console.WriteLine(this._nomRestaurant);
             Console.WriteLine("******************************************");
-            Console.WriteLine("[2] Gestion des tables");
-            Console.WriteLine("Voulez-vous continuer une table carrée(c), ronde(o) ou rectangulaire(r) ?");
+            Console.WriteLine("Gestion des tables : Ajout de tables");
+            Console.WriteLine("Voulez-vous continuer une table carrée(c), ronde(n) ou rectangulaire(r) ?");
             ConsoleKeyInfo saisie = Console.ReadKey(true);
-            if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.R || saisie.Key == ConsoleKey.O)//ne distingue pas les majuscules ou minuscules...
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
             {
-                Console.WriteLine("On continue ...");
+                Console.WriteLine("Vous avez selectionné une table carrée");
+            }
+            else if (saisie.Key == ConsoleKey.N)
+            {
+                Console.WriteLine("Vous avez sélectionné une table ronde");
+            }
+            else if (saisie.Key == ConsoleKey.R)
+            {
+                Console.WriteLine("Vous avez sélectionné une table rectangulaire");
             }
             else
             {
