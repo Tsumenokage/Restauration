@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nouveaurestaurant.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Nouveaurestaurant.Designer.cs">
+      <DependentUpon>Nouveaurestaurant.cs</DependentUpon>
+    </Compile>
     <Compile Include="pagePrincipale.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     <Compile Include="TableCarree.cs" />
     <Compile Include="TableRectangulaire.cs" />
     <Compile Include="TableRonde.cs" />
+    <EmbeddedResource Include="Nouveaurestaurant.resx">
+      <DependentUpon>Nouveaurestaurant.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pagePrincipale.resx">
       <DependentUpon>pagePrincipale.cs</DependentUpon>
     </EmbeddedResource>

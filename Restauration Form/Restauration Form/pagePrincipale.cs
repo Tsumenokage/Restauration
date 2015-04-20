@@ -15,6 +15,12 @@ namespace Restauration_Form
 
         private Restaurant restaurant;
 
+        public Restaurant Restaurant
+        {
+            get { return restaurant; }
+            set { restaurant = value; }
+        }
+
         public pagePrincipale()
         {
             InitializeComponent();
