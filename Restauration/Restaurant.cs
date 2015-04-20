@@ -19,9 +19,25 @@ namespace Restauration
             _listeFormules      = new List<Formule>();
             _listeReservations  = new List<Reservation>();
         }
-        public void AjoutTable(Table T)
+        public void AjoutTable()
         {
-            _listeTables.Add(T);
+            Console.Clear();
+            Console.WriteLine("******************************************");
+            Console.WriteLine(this._nomRestaurant);
+            Console.WriteLine("******************************************");
+            Console.WriteLine("[2] Gestion des tables");
+            Console.WriteLine("Voulez-vous continuer une table carrée(c), ronde(o) ou rectangulaire(r) ?");
+            ConsoleKeyInfo saisie = Console.ReadKey(true);
+            if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.R || saisie.Key == ConsoleKey.O)//ne distingue pas les majuscules ou minuscules...
+            {
+                Console.WriteLine("On continue ...");
+            }
+            else
+            {
+                Console.Clear();
+                this.AjoutTable();
+            }
+            Console.ReadLine();
         }
         public void SupprimerTable(Table T)
         {

@@ -36,7 +36,7 @@ namespace Restauration
                                 Console.WriteLine("WIP");
                                 break;
                             case 22:
-                                AjouterTable(restaurant);
+                                restaurant.AjoutTable();
                                 break;
                             case 23:
                                 Console.WriteLine("WIP");
@@ -120,27 +120,6 @@ namespace Restauration
                 Console.WriteLine("[24] Retour au menu principal");
             } while (!int.TryParse(Console.ReadLine(), out choixTable) || choixTable > 24 || choixTable < 20);
             return choixTable;
-        }
-        public static void AjouterTable(Restaurant R)
-        {
-            Restaurant restaurant = R;
-            Console.Clear();
-            Console.WriteLine("******************************************");
-            Console.WriteLine(restaurant._nomRestaurant);
-            Console.WriteLine("******************************************");
-            Console.WriteLine("[2] Gestion des tables");
-            Console.WriteLine("Voulez-vous continuer une table carrée(c), ronde(o) ou rectangulaire(r) ?");
-            ConsoleKeyInfo saisie = Console.ReadKey(true);
-            if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.R || saisie.Key == ConsoleKey.O)//ne distingue pas les majuscules ou minuscules...
-            {
-                Console.WriteLine("On continue ...");
-            }
-            else
-            {
-               Console.Clear();
-               AjouterTable(restaurant);
-            }
-            Console.ReadLine();
         }
     }
 }
