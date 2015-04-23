@@ -60,7 +60,7 @@ namespace Restauration
 
         private void questionnaireAjoutTable(_typeTable typeTable)
         {
-            Console.Clear();
+            //Console.Clear();
             int nbPlace = 0;
             bool jumelable = false;
             String reponseJumelable;
@@ -152,7 +152,7 @@ namespace Restauration
             string nomFormule;
             DateTime dureePreparation = new DateTime();
             DateTime dureePresence = new DateTime();
-            double prix;
+            int prix;
             int ressource;
             ConsoleKeyInfo saisie;
             do
@@ -213,19 +213,13 @@ namespace Restauration
                 ressource = this.ressourceFormule();
             }
         }
-
-        public void SupprimerFormule()
-        {
-            
-        }
-
         public DateTime tempsPreparation()
         {
             DateTime dureePreparation = new DateTime();
             int minutes;
             do
             {
-                Console.WriteLine("Choisir le temps en minute");
+                Console.WriteLine("Choisir le temps de préparation en minute");
             } while (!int.TryParse(Console.ReadLine(), out minutes) || minutes < 0 || minutes > 60);
             dureePreparation.AddMinutes(minutes);
             return dureePreparation;
@@ -238,24 +232,35 @@ namespace Restauration
             int heures;
             do
             {
-                Console.WriteLine("Choisir le temps en heure");
+                Console.WriteLine("Choisir le temps de présence en heure");
             } while (!int.TryParse(Console.ReadLine(), out  heures) || heures < 0 || heures > 60);
             dureePresence.AddHours(heures);
             do
             {
-                Console.WriteLine("Choisir le temps en minute");
+                Console.WriteLine("Choisir le temps de présence en minute");
             } while (!int.TryParse(Console.ReadLine(), out  minutes) || minutes < 0 || minutes > 60);
             dureePresence.AddMinutes(minutes);
             return dureePresence;
         }
 
-        public double prixFormule()
+        public int prixFormule()
         {
-            double prix;
+            double price;
+            bool prixOk = false;
+            Console.WriteLine("Entrez le prix de la formule.");
+            do
+            {
+                string txtPrice = Console.ReadLine();
+                if (Double.TryParse(txtPrice, out price))
+                {
+                    prixOk = true;
+                }
+            } while (!prixOk);
+            int prix;
             do
             {
                 Console.WriteLine("Choisir le prix de la formule");
-            } while (!double.TryParse(Console.ReadLine(), out prix) || prix > -1);
+            } while (!int.TryParse(Console.ReadLine(), out prix) || prix < 0);
             return prix;
         }
 
