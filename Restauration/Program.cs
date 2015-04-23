@@ -27,6 +27,7 @@ namespace Restauration
                 {
                     case 1:
                         Console.WriteLine("WIP");
+                        Console.ReadLine();;
                         break;
                     case 2:
                         int choixTable = choixMenuTable(restaurant);
@@ -44,7 +45,19 @@ namespace Restauration
                         }
                         break;
                     case 3:
-                        Console.WriteLine("WIP");
+                        int choixFormule = choixMenuFormule(restaurant);
+                        switch (choixFormule)
+	                    {
+                            case 1 :
+                                Console.WriteLine("Affichage listes des formules");
+                                break;
+                            case 2 :
+                                restaurant.AjoutFormule();
+                                break;
+                            case 3 :
+                                restaurant.SupprimerFormule();
+                                break;
+	                    }
                         break;
                     case 4:
                         quitteLogiciel = true;
@@ -56,6 +69,7 @@ namespace Restauration
             Console.WriteLine("Merci d'avoir utilisé notre logiciel");
             Console.ReadLine();
         }
+
         static bool MenuBase()
         {
             while(true)
@@ -87,6 +101,7 @@ namespace Restauration
 
             return restaurant;
         }
+
         public static int choixMenuPrincipal(Restaurant restaurant)
         {
             int choix;
@@ -104,6 +119,7 @@ namespace Restauration
             } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 4 || choix < 0);
             return choix;
         }
+
         public static int choixMenuTable(Restaurant restaurant)
         {
             int choixTable;
@@ -120,6 +136,24 @@ namespace Restauration
                 Console.WriteLine("[4] Retour au menu principal");
             } while (!int.TryParse(Console.ReadLine(), out choixTable) || choixTable > 4 || choixTable < 0);
             return choixTable;
+        }
+
+        public static int choixMenuFormule(Restaurant restaurant)
+        {
+            int choixFormule;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(restaurant._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Veuillez sélectionner une action à effectuer");
+                Console.WriteLine("[1] Formules existantes");
+                Console.WriteLine("[2] Ajout de formules");
+                Console.WriteLine("[3] Supression de formules");
+                Console.WriteLine("[4] Retour au menu principal");
+            } while (!int.TryParse(Console.ReadLine(), out choixFormule) || choixFormule > 4 || choixFormule < 0);
+            return choixFormule;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Restauration
 {
     class FormuleEmporter : Formule
     {
-        public FormuleEmporter(String nomFormule, double dureePresence, double dureePreparation, double prix) : base(nomFormule, dureePresence, dureePreparation, prix) { }
+        public FormuleEmporter(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource) : base(nomFormule, dureePresence, dureePreparation, prix, ressource) { }
         public override string ToString()
         {
             string ch = "";

@@ -8,15 +8,17 @@ namespace Restauration
     abstract class Formule
     {
         public String _nomFormule { get; protected set; }
-        protected double _dureePresence { get; set; }
-        protected double _dureePreparation { get; set; }
+        protected DateTime _dureePresence { get; set; }
+        protected DateTime _dureePreparation { get; set; }
         protected double _prix { get; set; }
-        public Formule(String nomFormule ,double dureePresence, double dureePreparation, double prix)
+        protected int _ressource { get; set; }
+        public Formule(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource)
         {
             _nomFormule = nomFormule;
             _dureePresence = dureePresence;
             _dureePreparation = dureePreparation;
             _prix = prix;
+            _ressource = ressource;
         }
         public override string ToString()
         {

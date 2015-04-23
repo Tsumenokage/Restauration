@@ -7,7 +7,7 @@ namespace Restauration
 {
     class FormuleRapide : Formule
     {
-        public FormuleRapide(String nomFormule, double dureePresence, double dureePreparation, double prix) : base(nomFormule, dureePresence, dureePreparation, prix) { }
+        public FormuleRapide(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource) : base(nomFormule, dureePresence, dureePreparation, prix, ressource) { }
         public override string ToString()
         {
             string ch = "";

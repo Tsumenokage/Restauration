@@ -7,7 +7,7 @@ namespace Restauration
 {
     class FormuleGastronomique : Formule
     {
-        public FormuleGastronomique(String nomFormule, double dureePresence, double dureePreparation, double prix) : base(nomFormule, dureePresence, dureePreparation, prix) { }
+        public FormuleGastronomique(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource) : base(nomFormule, dureePresence, dureePreparation, prix, ressource) { }
         public override string ToString()
         {
             string ch = "";
@@ -16,3 +16,4 @@ namespace Restauration
         }
     }
 }
+    

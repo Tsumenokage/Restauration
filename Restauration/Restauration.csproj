@@ -53,6 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation.cs" />
     <Compile Include="Restaurant.cs" />
+    <Compile Include="Salarie.cs" />
+    <Compile Include="SalarieChefCuisine.cs" />
+    <Compile Include="SalarieChefPartie.cs" />
+    <Compile Include="SalarieCommis.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TableCarree.cs" />
     <Compile Include="TableRectangulaire.cs" />

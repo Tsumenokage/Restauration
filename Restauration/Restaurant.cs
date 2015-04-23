@@ -146,20 +146,134 @@ namespace Restauration
             Console.ReadLine();
         }
 
-        
+        public void AjoutFormule()
+        {
+            bool verification = false;
+            string nomFormule;
+            DateTime dureePreparation = new DateTime();
+            DateTime dureePresence = new DateTime();
+            double prix;
+            int ressource;
+            ConsoleKeyInfo saisie;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(this._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Gestion des formules : Ajout d'une formule");
+                Console.WriteLine("Voulez-vous ajouter une formule consommation(c), à emporter(a), gastronomique(g), normale(n) ou rapide(r) ?");
+                saisie = Console.ReadKey(true);
+                if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.A || saisie.Key == ConsoleKey.G || saisie.Key == ConsoleKey.N || saisie.Key == ConsoleKey.R)
+                    verification = true;
+            } while (verification == false);
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+            {
+                Console.WriteLine("Vous avez selectionné une formule consommation");
+                nomFormule = "consommation";
+                dureePreparation = this.tempsPreparation();
+                dureePresence = this.tempsPresence();
+                prix = this.prixFormule();
+                ressource = this.ressourceFormule();
+            }
+            else if (saisie.Key == ConsoleKey.A)
+            {
+                Console.WriteLine("Vous avez sélectionné une formule à emporter");
+                nomFormule = "à emporter";
+                dureePreparation = this.tempsPreparation();
+                dureePresence = this.tempsPresence();
+                prix = this.prixFormule();
+                ressource = this.ressourceFormule();
+            }
+            else if (saisie.Key == ConsoleKey.G)
+            {
+                Console.WriteLine("Vous avez sélectionné une formule gastronomique");
+                nomFormule = "gastronomique";
+                dureePreparation = this.tempsPreparation();
+                dureePresence = this.tempsPresence();
+                prix = this.prixFormule();
+                ressource = this.ressourceFormule();
+            }
+            else if (saisie.Key == ConsoleKey.N)
+            {
+                Console.WriteLine("Vous avez sélectionné une formule normale");
+                nomFormule = "normale";
+                dureePreparation = this.tempsPreparation();
+                dureePresence = this.tempsPresence();
+                prix = this.prixFormule();
+                ressource = this.ressourceFormule();
+            }
+            else if (saisie.Key == ConsoleKey.R)
+            {
+                Console.WriteLine("Vous avez sélectionné une formule rapide");
+                nomFormule = "rapide";
+                dureePreparation = this.tempsPreparation();
+                dureePresence = this.tempsPresence();
+                prix = this.prixFormule();
+                ressource = this.ressourceFormule();
+            }
+        }
 
-        public void AjoutFormule(Formule F)
+        public void SupprimerFormule()
         {
-            _listeFormules.Add(F);
+            
         }
-        public void SupprimerFormule(Formule F)
+
+        public DateTime tempsPreparation()
         {
-            _listeFormules.Remove(F);
+            DateTime dureePreparation = new DateTime();
+            int minutes;
+            do
+            {
+                Console.WriteLine("Choisir le temps en minute");
+            } while (!int.TryParse(Console.ReadLine(), out minutes) || minutes < 0 || minutes > 60);
+            dureePreparation.AddMinutes(minutes);
+            return dureePreparation;
         }
+
+        public DateTime tempsPresence()
+        {
+            DateTime dureePresence = new DateTime();
+            int minutes;
+            int heures;
+            do
+            {
+                Console.WriteLine("Choisir le temps en heure");
+            } while (!int.TryParse(Console.ReadLine(), out  heures) || heures < 0 || heures > 60);
+            dureePresence.AddHours(heures);
+            do
+            {
+                Console.WriteLine("Choisir le temps en minute");
+            } while (!int.TryParse(Console.ReadLine(), out  minutes) || minutes < 0 || minutes > 60);
+            dureePresence.AddMinutes(minutes);
+            return dureePresence;
+        }
+
+        public double prixFormule()
+        {
+            double prix;
+            do
+            {
+                Console.WriteLine("Choisir le prix de la formule");
+            } while (!double.TryParse(Console.ReadLine(), out prix) || prix > -1);
+            return prix;
+        }
+
+        public int ressourceFormule()
+        {
+            int ressource;
+            do
+            {
+                Console.WriteLine("Choisir le coût en ressource de la formule");
+            } while (!int.TryParse(Console.ReadLine(), out ressource) || ressource > -1);
+            return ressource;
+        }
+
         public void AjoutReservation(Reservation R)
         {
             _listeReservations.Add(R);
         }
+
         public void SupprimerReservation(Reservation R)
         {
             _listeReservations.Remove(R);
