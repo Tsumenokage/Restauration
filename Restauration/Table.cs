@@ -9,12 +9,14 @@ namespace Restauration
     abstract class Table
     {
         //champs nécessaires à la création d'une classe table
-        protected int _numTable { get; set; } //numéro de la table
+        public int _numTable { get; protected set; } //numéro de la table
+        protected static int _numTotale;
         protected int _nbPlacesMax { get; set; } //nombre de place maximum de la table
         protected bool _jumelage { get; set; } //O ou N en fonction de si la table peut être jumelée ou non
-        public Table(int numTable, int nbPlaceMax, bool jumelage)//contructeur de la classe table
+        public Table(int nbPlaceMax, bool jumelage)//contructeur de la classe table
         {
-            _numTable = numTable;
+            _numTable = _numTotale + 1;
+            _numTotale++;
             _nbPlacesMax = nbPlaceMax;
             _jumelage = jumelage;
         }
@@ -24,5 +26,6 @@ namespace Restauration
             ch += "Numero:" + _numTable + "     nbPlaceMax:" + _nbPlacesMax +"     Jumelage:" + _jumelage;
             return ch;
         }
+
     }
 }

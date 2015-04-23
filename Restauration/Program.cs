@@ -33,13 +33,13 @@ namespace Restauration
                         switch (choixTable)
                         {
                             case 1:
-                                Console.WriteLine("WIP");
+                                restaurant.listeTables();
                                 break;
                             case 2:
                                 restaurant.AjoutTable();
                                 break;
                             case 3:
-                                Console.WriteLine("WIP");
+                                restaurant.SupprimerTable();
                                 break;
                         }
                         break;

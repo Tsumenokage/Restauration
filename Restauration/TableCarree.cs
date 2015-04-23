@@ -8,8 +8,8 @@ namespace Restauration
     // création de la class table carrée qui hérite de la class table
     class TableCarree : Table
     {
-        public TableCarree(int numTable, int nbPlacesMax, bool jumelage)
-            : base(numTable, nbPlacesMax, jumelage)//appel au constructeur de la classe Table
+        public TableCarree(int nbPlacesMax, bool jumelage)
+            : base(nbPlacesMax, jumelage)//appel au constructeur de la classe Table
         {
         }
         public override string ToString()
