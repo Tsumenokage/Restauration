@@ -7,17 +7,19 @@ namespace Restauration
 {
     class Reservation
     {
-        private int _numeroReservation { get; set; }
-        private String _nomClient { get; set; }
+        public int _numeroReservation { get; private set; }
+        private static int _numTotal;
+        public String _nomClient { get; private set; }
         private String _numeroTelephone { get; set; }
-        private DateTime _dateReservation { get; set; }
+        public DateTime _dateReservation { get; private set; }
         private int _nbConvives { get; set; }
-        private Formule _formuleRetenue { get; set; }
+        private string _formuleRetenue { get; set; }
 
-        public Reservation(int _numeroReservation, String _nomClient, String _numeroTelephone,
-            DateTime _dateReservation, int _nbConvives, Formule _formuleRetenue)
+        public Reservation(String _nomClient, String _numeroTelephone,
+            DateTime _dateReservation, int _nbConvives, string _formuleRetenue)
         {
-            this._numeroReservation = _numeroReservation;
+            _numeroReservation = _numTotal + 1;
+            _numTotal++;
             this._nomClient = _nomClient;
             this._numeroTelephone = _numeroTelephone;
             this._dateReservation = _dateReservation;
@@ -34,7 +36,7 @@ namespace Restauration
             res += "    Numéro de téléphone : " + _numeroTelephone + "\n";
             res += "    Date de Résèrvation : " + _dateReservation.ToString("g") + "\n";
             res += "    Nombre de convives : " + _nbConvives + "\n";
-            res += "    Formule retenue : " + _formuleRetenue._nomFormule + "\n";
+            res += "    Formule retenue : " + _formuleRetenue + "\n";
 
             return res;
         }

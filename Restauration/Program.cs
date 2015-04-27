@@ -26,8 +26,24 @@ namespace Restauration
                 switch (choix)
                 {
                     case 1:
-                        Console.WriteLine("WIP");
-                        Console.ReadLine();;
+                        int choixReservation = choixMenuReservation(restaurant);
+                        switch (choixReservation)
+	                    {
+                            case 1:
+                                restaurant.listeReservation();
+                                break;
+                            case 2 :
+                                restaurant.AjoutReservation();
+                                break;
+                            case 3 :
+                                restaurant.supprimerReservation();
+                                break;
+                            case 4 :
+                                restaurant.rechercheReservationNom();
+                                break;
+		                    default:
+                                break;
+	                    }
                         break;
                     case 2:
                         int choixTable = choixMenuTable(restaurant);
@@ -154,6 +170,25 @@ namespace Restauration
                 Console.WriteLine("[4] Retour au menu principal");
             } while (!int.TryParse(Console.ReadLine(), out choixFormule) || choixFormule > 4 || choixFormule < 0);
             return choixFormule;
+        }
+
+        public static int choixMenuReservation(Restaurant restaurant)
+        {
+            int choixReservation;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(restaurant._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Veuillez sélectionner une action à effectuer");
+                Console.WriteLine("[1] Reservation existantes");
+                Console.WriteLine("[2] Ajouter une reservation");
+                Console.WriteLine("[3] Supression de reservation");
+                Console.WriteLine("[4] Recherchee une reservation");
+                Console.WriteLine("[5] Retour au menu principal");
+            } while (!int.TryParse(Console.ReadLine(), out choixReservation) || choixReservation > 4 || choixReservation < 0);
+            return choixReservation;
         }
     }
 }

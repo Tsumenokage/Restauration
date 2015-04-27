@@ -235,7 +235,7 @@ namespace Restauration
         {
             bool numOk = false;
             int numeroSuppresion = 0;
-            Table formuleASupprimer;
+            Formule formuleASupprimer;
 
             while (!numOk)
             {
@@ -244,10 +244,10 @@ namespace Restauration
             }
 
 
-            formuleASupprimer = _listeTables.Find(x => x._numTable == numeroSuppresion);
+            formuleASupprimer = _listeFormules.Find(x => x._numFormule == numeroSuppresion);
 
             if (formuleASupprimer != null)
-                _listeTables.Remove(formuleASupprimer);
+                this._listeFormules.Remove(formuleASupprimer);
             else
             {
                 Console.WriteLine("Aucune formule ne porte ce numéro");
@@ -256,7 +256,7 @@ namespace Restauration
 
 
 
-            _listeTables.Remove(formuleASupprimer);
+            this._listeFormules.Remove(formuleASupprimer);
         }
 
         public void listeFormules()
@@ -328,16 +328,141 @@ namespace Restauration
             return ressource;
         }
 
-        public void AjoutReservation(Reservation R)
+        public void AjoutReservation()
         {
-            _listeReservations.Add(R);
+            String nomClient;
+            String numTelephone;
+            DateTime dateReservationClient;
+            int nbConvive;
+            string nomFormule = "";
+            bool verification = false;
+            ConsoleKeyInfo saisie;
+
+            Console.Clear();
+            Console.WriteLine("******************************************");
+            Console.WriteLine(this._nomRestaurant);
+            Console.WriteLine("******************************************");
+            Console.WriteLine("Ajout d'une reservation");
+            Console.WriteLine("Entrer le nom du client :");
+            nomClient = Console.ReadLine();
+            Console.WriteLine("Entrer son numéro de téléphone : ");
+            numTelephone = Console.ReadLine();
+            dateReservationClient = dateReservation();
+
+            do
+            {
+                Console.WriteLine("Nombre de convives :");
+            } while (!int.TryParse(Console.ReadLine(), out nbConvive));
+
+            do
+            {
+             Console.WriteLine("Type de formule retenue ?");
+                saisie = Console.ReadKey(true);
+                if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.A || saisie.Key == ConsoleKey.G || saisie.Key == ConsoleKey.N || saisie.Key == ConsoleKey.R)
+                    verification = true;
+            } while (verification == false);
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+            {
+                nomFormule = "consommation";
+            }
+            else if (saisie.Key == ConsoleKey.A)
+            {
+                nomFormule = "à emporter";
+            }
+            else if (saisie.Key == ConsoleKey.G)
+            {
+                nomFormule = "gastronomique";
+            }
+            else if (saisie.Key == ConsoleKey.N)
+            {
+                nomFormule = "normale";
+            }
+            else if (saisie.Key == ConsoleKey.R)
+            {
+                nomFormule = "rapide";
+            }
+
+            Reservation nouvelleReservation = new Reservation(nomClient, numTelephone, dateReservationClient, nbConvive, nomFormule);
+
+            if (validationOperation())
+                _listeReservations.Add(nouvelleReservation);
+            else
+                Console.WriteLine("Annulation de l'ajout de la reservation");
         }
 
-        public void SupprimerReservation(Reservation R)
+        //Mettre en place des expression régulière pour vérifier si le format entrer est correcte
+        public DateTime dateReservation()
         {
-            _listeReservations.Remove(R);
+            Console.WriteLine("Date de la reservation : (format jj/mm/aaaa)");
+            String date = Console.ReadLine();
+            Console.WriteLine("Heure de la reservation : (format hh:mm)");
+            date += " " + Console.ReadLine();
+
+            DateTime dateReservation = Convert.ToDateTime(date);
+            return dateReservation;
         }
 
+        public void supprimerReservation()
+        {
+            bool numOk = false;
+            int numeroSuppresion = 0;
+            Reservation reservationASupprimer;
+
+            while (!numOk)
+            {
+                Console.WriteLine("Veuillez renseigner le numéro de reservation à supprimer : ");
+                numOk = int.TryParse(Console.ReadLine(), out numeroSuppresion);
+            }
+
+
+            reservationASupprimer = this._listeReservations.Find(x => x._numeroReservation == numeroSuppresion);
+
+            if (reservationASupprimer != null)
+                this._listeReservations.Remove(reservationASupprimer);
+            else
+            {
+                Console.WriteLine("Aucune reservation ne porte ce numéro");
+                Console.ReadLine();
+            }
+
+
+
+            this._listeReservations.Remove(reservationASupprimer);
+        }
+
+        public void listeReservation()
+        {
+            Console.Clear();
+            Console.WriteLine("Liste des reservations du restaurant : ");
+            foreach (var reservation in _listeReservations)
+            {
+                if(reservation._dateReservation >= DateTime.Now)
+                    Console.WriteLine(reservation);
+            }
+            Console.ReadLine();
+        }
+
+        public void rechercheReservationNom()
+        {
+            String nomReservation;
+            List<Reservation> resRecherche = new List<Reservation>();
+
+            Console.WriteLine("Entrer le nom ou une partie du nom voulu");
+            nomReservation = Console.ReadLine();
+
+            resRecherche = this._listeReservations.FindAll( x => x._nomClient.Contains(nomReservation));
+
+            Console.Clear();
+            Console.WriteLine("Resultat de la recherche : ");
+            foreach (var reservation in resRecherche)
+            {
+                if(reservation._dateReservation >= DateTime.Now)
+                    Console.WriteLine(reservation);
+            }
+            Console.ReadLine();
+
+
+        }
 
         public bool validationOperation()
         {
