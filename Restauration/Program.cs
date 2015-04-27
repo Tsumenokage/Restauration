@@ -49,13 +49,13 @@ namespace Restauration
                         switch (choixFormule)
 	                    {
                             case 1 :
-                                Console.WriteLine("Affichage listes des formules");
+                                restaurant.listeFormules();
                                 break;
                             case 2 :
                                 restaurant.AjoutFormule();
                                 break;
                             case 3 :
-                                restaurant.SupprimerFormule();
+                                restaurant.supprimerFormule();
                                 break;
 	                    }
                         break;

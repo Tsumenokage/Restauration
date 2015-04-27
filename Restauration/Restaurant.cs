@@ -103,7 +103,10 @@ namespace Restauration
             else
                 nouvelleTable = new TableRonde(nbPlace, false);
 
-            this._listeTables.Add(nouvelleTable);
+            if(validationOperation())
+                this._listeTables.Add(nouvelleTable);
+            else
+                Console.WriteLine("Annulation de l'ajout de la table");
 
             
         }
@@ -149,10 +152,10 @@ namespace Restauration
         public void AjoutFormule()
         {
             bool verification = false;
-            string nomFormule;
+            string nomFormule = "";
             DateTime dureePreparation = new DateTime();
             DateTime dureePresence = new DateTime();
-            int prix;
+            double prix;
             int ressource;
             ConsoleKeyInfo saisie;
             do
@@ -171,48 +174,102 @@ namespace Restauration
             {
                 Console.WriteLine("Vous avez selectionné une formule consommation");
                 nomFormule = "consommation";
-                dureePreparation = this.tempsPreparation();
-                dureePresence = this.tempsPresence();
-                prix = this.prixFormule();
-                ressource = this.ressourceFormule();
             }
             else if (saisie.Key == ConsoleKey.A)
             {
                 Console.WriteLine("Vous avez sélectionné une formule à emporter");
                 nomFormule = "à emporter";
-                dureePreparation = this.tempsPreparation();
-                dureePresence = this.tempsPresence();
-                prix = this.prixFormule();
-                ressource = this.ressourceFormule();
             }
             else if (saisie.Key == ConsoleKey.G)
             {
                 Console.WriteLine("Vous avez sélectionné une formule gastronomique");
                 nomFormule = "gastronomique";
-                dureePreparation = this.tempsPreparation();
-                dureePresence = this.tempsPresence();
-                prix = this.prixFormule();
-                ressource = this.ressourceFormule();
             }
             else if (saisie.Key == ConsoleKey.N)
             {
                 Console.WriteLine("Vous avez sélectionné une formule normale");
                 nomFormule = "normale";
-                dureePreparation = this.tempsPreparation();
-                dureePresence = this.tempsPresence();
-                prix = this.prixFormule();
-                ressource = this.ressourceFormule();
             }
             else if (saisie.Key == ConsoleKey.R)
             {
                 Console.WriteLine("Vous avez sélectionné une formule rapide");
                 nomFormule = "rapide";
-                dureePreparation = this.tempsPreparation();
-                dureePresence = this.tempsPresence();
-                prix = this.prixFormule();
-                ressource = this.ressourceFormule();
             }
+
+            dureePreparation = this.tempsPreparation();
+            dureePresence = this.tempsPresence();
+            prix = this.prixFormule();
+            ressource = this.ressourceFormule();
+
+            Formule formuleAjoutee = null;
+
+            switch (nomFormule)
+	{
+                case "consommation" : 
+                    formuleAjoutee = new FormuleConsommation(nomFormule,dureePresence,dureePreparation,prix,ressource);
+                    break;
+                case "à emporter" : 
+                    formuleAjoutee = new FormuleEmporter(nomFormule,dureePresence,dureePreparation,prix,ressource);
+                    break;
+                case "gastronomique" : 
+                    formuleAjoutee = new FormuleGastronomique(nomFormule,dureePresence,dureePreparation,prix,ressource);
+                    break;
+                case "normale" :
+                    formuleAjoutee = new FormuleNormale(nomFormule,dureePresence,dureePreparation,prix,ressource);
+                    break;
+                case "rapide" : 
+                    formuleAjoutee = new FormuleRapide(nomFormule,dureePresence,dureePreparation,prix,ressource);
+                    break;
+		        default:
+                break;
+	}
+
+            if (validationOperation())
+                _listeFormules.Add(formuleAjoutee);
+            else
+                Console.WriteLine("Annulation de l'ajout de la formule");
+
         }
+
+        public void supprimerFormule()
+        {
+            bool numOk = false;
+            int numeroSuppresion = 0;
+            Table formuleASupprimer;
+
+            while (!numOk)
+            {
+                Console.WriteLine("Veuillez renseigner le numéro de Formule à supprimer : ");
+                numOk = int.TryParse(Console.ReadLine(), out numeroSuppresion);
+            }
+
+
+            formuleASupprimer = _listeTables.Find(x => x._numTable == numeroSuppresion);
+
+            if (formuleASupprimer != null)
+                _listeTables.Remove(formuleASupprimer);
+            else
+            {
+                Console.WriteLine("Aucune formule ne porte ce numéro");
+                Console.ReadLine();
+            }
+
+
+
+            _listeTables.Remove(formuleASupprimer);
+        }
+
+        public void listeFormules()
+        {
+            Console.Clear();
+            Console.WriteLine("Liste des formules du restaurant : ");
+            foreach (var formule in _listeFormules)
+            {
+                Console.WriteLine(formule);
+            }
+            Console.ReadLine();
+        }
+
         public DateTime tempsPreparation()
         {
             DateTime dureePreparation = new DateTime();
@@ -221,7 +278,7 @@ namespace Restauration
             {
                 Console.WriteLine("Choisir le temps de préparation en minute");
             } while (!int.TryParse(Console.ReadLine(), out minutes) || minutes < 0 || minutes > 60);
-            dureePreparation.AddMinutes(minutes);
+            dureePreparation = dureePreparation.AddMinutes(minutes);
             return dureePreparation;
         }
 
@@ -234,16 +291,16 @@ namespace Restauration
             {
                 Console.WriteLine("Choisir le temps de présence en heure");
             } while (!int.TryParse(Console.ReadLine(), out  heures) || heures < 0 || heures > 60);
-            dureePresence.AddHours(heures);
+            dureePresence = dureePresence.AddHours(heures);
             do
             {
                 Console.WriteLine("Choisir le temps de présence en minute");
             } while (!int.TryParse(Console.ReadLine(), out  minutes) || minutes < 0 || minutes > 60);
-            dureePresence.AddMinutes(minutes);
+            dureePresence = dureePresence.AddMinutes(minutes);
             return dureePresence;
         }
 
-        public int prixFormule()
+        public double prixFormule()
         {
             double price;
             bool prixOk = false;
@@ -256,12 +313,9 @@ namespace Restauration
                     prixOk = true;
                 }
             } while (!prixOk);
-            int prix;
-            do
-            {
-                Console.WriteLine("Choisir le prix de la formule");
-            } while (!int.TryParse(Console.ReadLine(), out prix) || prix < 0);
-            return prix;
+
+            return price;    
+
         }
 
         public int ressourceFormule()
@@ -270,7 +324,7 @@ namespace Restauration
             do
             {
                 Console.WriteLine("Choisir le coût en ressource de la formule");
-            } while (!int.TryParse(Console.ReadLine(), out ressource) || ressource > -1);
+            } while (!int.TryParse(Console.ReadLine(), out ressource) || ressource < 0);
             return ressource;
         }
 
@@ -282,6 +336,24 @@ namespace Restauration
         public void SupprimerReservation(Reservation R)
         {
             _listeReservations.Remove(R);
+        }
+
+
+        public bool validationOperation()
+        {
+            bool saisieOk = false;
+
+            while (!saisieOk)
+            {
+                Console.WriteLine("Validez vous l'opération que vous venez d'effectuer ? (o ou n)");
+                ConsoleKeyInfo saisie = Console.ReadKey(true);
+                if (saisie.Key == ConsoleKey.O)
+                    return true;
+                else if (saisie.Key == ConsoleKey.N)
+                    return false;
+            }
+            return false;
+
         }
     }
 }
