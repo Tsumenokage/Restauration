@@ -500,6 +500,13 @@ namespace Restauration
             restaurantNode.AppendChild(listesTables);
 
             //Sauvegarde de la liste des formules
+            XmlNode listeFormules = saveRestau.CreateElement("listesFormules");
+            foreach (var formule in _listeFormules)
+            {
+                formule.sauvegardeFormule(saveRestau, listeFormules);
+            }
+
+            restaurantNode.AppendChild(listeFormules);
 
             //Sauvegarde de la listes des employés
 
