@@ -76,6 +76,9 @@ namespace Restauration
 	                    }
                         break;
                     case 4:
+                        restaurant.sauvegardeRestaurant();
+                            break;
+                    case 5:
                         quitteLogiciel = true;
                         break;
                 }
@@ -131,8 +134,9 @@ namespace Restauration
                 Console.WriteLine("[1] Gestion des reservation");
                 Console.WriteLine("[2] Gestion des tables");
                 Console.WriteLine("[3] Gestion des des formules");
-                Console.WriteLine("[4] Quitter le logiciel");
-            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 4 || choix < 0);
+                Console.WriteLine("[4] Sauvegarder les informations");
+                Console.WriteLine("[5] Quitter le logiciel");
+            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 5 || choix < 0);
             return choix;
         }
 

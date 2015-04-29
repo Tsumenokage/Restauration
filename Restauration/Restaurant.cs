@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace Restauration
 {
@@ -55,7 +56,6 @@ namespace Restauration
                 Console.Clear();
                 this.AjoutTable();
             }
-            Console.ReadLine();
         }
 
         private void questionnaireAjoutTable(_typeTable typeTable)
@@ -478,6 +478,35 @@ namespace Restauration
                     return false;
             }
             return false;
+
+        }
+
+        public void sauvegardeRestaurant()
+        {
+            XmlDocument saveRestau = new XmlDocument();
+
+            XmlNode restaurantNode = saveRestau.CreateElement("restaurant");
+            saveRestau.AppendChild(restaurantNode);
+            XmlNode nomRestaurant = saveRestau.CreateElement("nomRestaurant");
+            nomRestaurant.InnerText = this._nomRestaurant;
+            restaurantNode.AppendChild(nomRestaurant);
+
+            //Sauvegarde de la liste des tables
+            XmlNode listesTables = saveRestau.CreateElement("listeTables");
+            foreach (var table in _listeTables)
+            {
+                table.sauvegardeTable(saveRestau, listesTables);
+            }
+            restaurantNode.AppendChild(listesTables);
+
+            //Sauvegarde de la liste des formules
+
+            //Sauvegarde de la listes des employés
+
+            //Sauvegarde de la liste des reservations
+
+
+            saveRestau.Save(this._nomRestaurant + ".xml");
 
         }
     }
