@@ -57,7 +57,7 @@ namespace Restauration
                 this.AjoutTable();
             }
         }
-
+ 
         private void questionnaireAjoutTable(_typeTable typeTable)
         {
             //Console.Clear();
