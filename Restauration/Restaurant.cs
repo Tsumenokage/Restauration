@@ -12,6 +12,7 @@ namespace Restauration
         private List<Table> _listeTables { get; set; }
         private List<Formule> _listeFormules { get; set; }
         private List<Reservation> _listeReservations { get; set; }
+        private List<Salarie> _listeSalaries { get; set; }
         private enum _typeTable
         { 
             Carre , 
@@ -25,8 +26,8 @@ namespace Restauration
             _listeTables        = new List<Table>();
             _listeFormules      = new List<Formule>();
             _listeReservations  = new List<Reservation>();
-        }
-
+            _listeSalaries      = new List<Salarie>();
+        }   
         public void AjoutTable()
         {
             Console.Clear();
@@ -461,6 +462,45 @@ namespace Restauration
             }
             Console.ReadLine();
 
+
+        }
+
+        public void AjoutSalarie()
+        {
+            bool verification = false;
+            ConsoleKeyInfo saisie;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(this._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Gestion des salariés : Ajout d'un salarié");
+                Console.WriteLine("Voulez-vous ajouter un chef de cuisine(c), un chef de partie(p), ou un commis(o) ?");
+                saisie = Console.ReadKey(true);
+                if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.P || saisie.Key == ConsoleKey.O)
+                    verification = true;
+            } while (verification == false);
+            Salarie salarieAjoute = null;
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+            {
+                Console.WriteLine("Vous avez selectionné un chef de cuisine");
+                salarieAjoute = new SalarieChefCuisine();
+            }
+            else if (saisie.Key == ConsoleKey.P)
+            {
+                Console.WriteLine("Vous avez sélectionné un chef de partie");
+                salarieAjoute = new SalarieChefPartie();
+            }
+            else if (saisie.Key == ConsoleKey.O)
+            {
+                Console.WriteLine("Vous avez sélectionné un commis");
+                salarieAjoute = new SalarieCommis();
+            }
+            if (validationOperation())
+                _listeSalaries.Add(salarieAjoute);
+            else
+                Console.WriteLine("Annulation de l'ajout du salarié");
 
         }
 

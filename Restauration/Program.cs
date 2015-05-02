@@ -76,9 +76,24 @@ namespace Restauration
 	                    }
                         break;
                     case 4:
+                        int choixSalarie = choixMenuSalarie(restaurant);
+                        switch (choixSalarie)
+                        {
+                            case 1:
+                                //restaurant.listeSalarie();
+                                break;
+                            case 2:
+                                restaurant.AjoutSalarie();
+                                break;
+                            case 3:
+                                //restaurant.supprimerSalarie();
+                                break;
+                        }
+                        break;
+                    case 5:
                         restaurant.sauvegardeRestaurant();
                             break;
-                    case 5:
+                    case 6:
                         quitteLogiciel = true;
                         break;
                 }
@@ -133,10 +148,11 @@ namespace Restauration
                 Console.WriteLine("Veuillez sélectionner une action à effectuer");
                 Console.WriteLine("[1] Gestion des reservation");
                 Console.WriteLine("[2] Gestion des tables");
-                Console.WriteLine("[3] Gestion des des formules");
-                Console.WriteLine("[4] Sauvegarder les informations");
-                Console.WriteLine("[5] Quitter le logiciel");
-            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 5 || choix < 0);
+                Console.WriteLine("[3] Gestion des formules");
+                Console.WriteLine("[4] Gestion des salariés");
+                Console.WriteLine("[5] Sauvegarder les informations");
+                Console.WriteLine("[6] Quitter le logiciel");
+            } while (!int.TryParse(Console.ReadLine(), out choix) || choix > 6 || choix < 0);
             return choix;
         }
 
@@ -174,6 +190,24 @@ namespace Restauration
                 Console.WriteLine("[4] Retour au menu principal");
             } while (!int.TryParse(Console.ReadLine(), out choixFormule) || choixFormule > 4 || choixFormule < 0);
             return choixFormule;
+        }
+
+        public static int choixMenuSalarie(Restaurant restaurant)
+        {
+            int choixSalarie;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******************************************");
+                Console.WriteLine(restaurant._nomRestaurant);
+                Console.WriteLine("******************************************");
+                Console.WriteLine("Veuillez sélectionner une action à effectuer");
+                Console.WriteLine("[1] Salariés existants");
+                Console.WriteLine("[2] Ajout de salariés");
+                Console.WriteLine("[3] Supression de salariés");
+                Console.WriteLine("[4] Retour au menu principal");
+            } while (!int.TryParse(Console.ReadLine(), out choixSalarie) || choixSalarie > 4 || choixSalarie < 0);
+            return choixSalarie;
         }
 
         public static int choixMenuReservation(Restaurant restaurant)

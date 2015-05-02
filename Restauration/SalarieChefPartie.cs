@@ -7,7 +7,7 @@ namespace Restauration
 {
     class SalarieChefPartie : Salarie
     {
-        public SalarieChefPartie (int ressource) : base(ressource){}
+        public SalarieChefPartie () : base(100){}
         public override string ToString()
         {
             string ch = "";
