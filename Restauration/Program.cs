@@ -80,13 +80,13 @@ namespace Restauration
                         switch (choixSalarie)
                         {
                             case 1:
-                                //restaurant.listeSalarie();
+                                restaurant.listeSalarie();
                                 break;
                             case 2:
                                 restaurant.AjoutSalarie();
                                 break;
                             case 3:
-                                //restaurant.supprimerSalarie();
+                                restaurant.supprimerSalarie();
                                 break;
                         }
                         break;

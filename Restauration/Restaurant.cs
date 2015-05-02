@@ -504,6 +504,44 @@ namespace Restauration
 
         }
 
+        public void supprimerSalarie()
+        {
+            bool numOk = false;
+            int numeroSuppresion = 0;
+            Salarie salarieASupprimer;
+
+            while (!numOk)
+            {
+                Console.WriteLine("Veuillez renseigner le numéro du salarié à supprimer : ");
+                numOk = int.TryParse(Console.ReadLine(), out numeroSuppresion);
+            }
+
+
+            salarieASupprimer = _listeSalaries.Find(x => x._numSalarie == numeroSuppresion);
+
+            if (salarieASupprimer != null)
+                this._listeSalaries.Remove(salarieASupprimer);
+            else
+            {
+                Console.WriteLine("Aucun Salarié ne porte ce numéro");
+                Console.ReadLine();
+            }
+
+
+
+            this._listeSalaries.Remove(salarieASupprimer);
+        }
+
+        public void listeSalarie()
+        {
+            Console.Clear();
+            Console.WriteLine("Liste des salarié du restaurant : ");
+            foreach (var salarie in _listeSalaries)
+            {
+                Console.WriteLine(salarie);
+            }
+            Console.ReadLine();
+        }
         public bool validationOperation()
         {
             bool saisieOk = false;
