@@ -587,6 +587,14 @@ namespace Restauration
             restaurantNode.AppendChild(listeFormules);
 
             //Sauvegarde de la listes des employés
+            XmlNode listeSalaries = saveRestau.CreateElement("listesSalaries");
+            foreach (var salarie in _listeSalaries)
+            {
+                salarie.sauvegardeSalarie(saveRestau, listeSalaries);
+            }
+
+            restaurantNode.AppendChild(listeSalaries);
+
 
             //Sauvegarde de la liste des reservations
 
