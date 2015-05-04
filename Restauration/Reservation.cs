@@ -139,8 +139,19 @@ namespace Restauration
                     {
                         foreach (Table T4 in tablesRestaurant)
                         {
-                            if (T4._jumelage & (T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives)
+                            if (T4._jumelage & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
                             {
+                                //marche qu'avec les tables rectangulaires 
+                                //avec les tables carrées il faut compter placesmax = ((_nbPlacesMax/4)*2)
+                                //car on perd les places où l'on colle les tables
+                                tables.Add(T3);
+                                tables.Add(T4);
+                                tableTrouve = true;
+                            }
+                            else if (T4._jumelage & (T3._nbPlacesMax == T4._nbPlacesMax) & (((T3._nbPlacesMax+T4._nbPlacesMax) - ((T3._nbPlacesMax/4)*2))==nbConvives) & (T3 is TableCarree) & (T4 is TableCarree))
+                            {
+                                tables.Add(T3);
+                                tables.Add(T4);
                                 tableTrouve = true;
                             }
                         }
