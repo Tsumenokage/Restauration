@@ -133,6 +133,19 @@ namespace Restauration
                 {
                     tableTrouve = true;
                 }
+                foreach (Table T3 in tablesRestaurant)
+                {
+                    if (T3._jumelage)
+                    {
+                        foreach (Table T4 in tablesRestaurant)
+                        {
+                            if (T4._jumelage & (T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives)
+                            {
+                                tableTrouve = true;
+                            }
+                        }
+                    }
+                }
             }
             return tables;
         }
