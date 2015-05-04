@@ -28,6 +28,7 @@ namespace Restauration
             _listeReservations  = new List<Reservation>();
             _listeSalaries      = new List<Salarie>();
         }   
+
         public void AjoutTable()
         {
             Console.Clear();
@@ -386,7 +387,10 @@ namespace Restauration
             Reservation nouvelleReservation = new Reservation(nomClient, numTelephone, dateReservationClient, nbConvive, nomFormule);
 
             if (validationOperation())
+            {
                 _listeReservations.Add(nouvelleReservation);
+                _listeReservations = _listeReservations.OrderBy(o => o._dateReservation).ToList(); 
+            }
             else
                 Console.WriteLine("Annulation de l'ajout de la reservation");
         }
@@ -542,6 +546,7 @@ namespace Restauration
             }
             Console.ReadLine();
         }
+
         public bool validationOperation()
         {
             bool saisieOk = false;
@@ -601,6 +606,69 @@ namespace Restauration
 
             saveRestau.Save(this._nomRestaurant + ".xml");
 
+        }
+
+        public bool ChargementRestaurant()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+
+            try
+            {
+                xmlDoc.Load(this._nomRestaurant + ".xml");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadLine();
+                return false;
+            }
+
+            XmlNode noeud = xmlDoc.DocumentElement;
+            Console.WriteLine(noeud.ToString());
+
+            try
+            {
+                XmlNodeList noeudRestaurant = noeud.SelectNodes("nomRestaurant");
+                this._nomRestaurant = noeudRestaurant[0].InnerText;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+            try
+            {
+                XmlNode noeudTables = noeud.SelectSingleNode("listeTables");
+                XmlNodeList tablesEnregistree = noeudTables.SelectNodes("table");
+
+                foreach (XmlNode table in tablesEnregistree)
+                {
+                    Table tableAjoutee;
+                    String typeTable = table.Attributes[0].Value;
+                    int numTable = int.Parse(table.SelectSingleNode("NumeroTable").InnerText);
+                    int nbPlaceMax = int.Parse(table.SelectSingleNode("CapaciteTable").InnerText);
+                    bool jumelable = bool.Parse(table.SelectSingleNode("Jumelable").InnerText);
+
+
+                    if (typeTable == "Restauration.TableRonde")
+                        tableAjoutee = new TableRonde(numTable,nbPlaceMax,jumelable);
+                    else if (typeTable == "Restauration.TableCarree")
+                        tableAjoutee = new TableCarree(numTable, nbPlaceMax, jumelable);
+                    else
+                        tableAjoutee = new TableRectangulaire(numTable, nbPlaceMax, jumelable);
+
+                    this._listeTables.Add(tableAjoutee);
+                   
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+            return true;
         }
     }
 }

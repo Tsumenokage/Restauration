@@ -17,7 +17,7 @@ namespace Restauration
                 restaurant = nouveauRestaurant();
             else
             {
-                //Procédure de chargement de fichier XML à mettre en place
+                restaurant = chargementRestaurant();
             }
 
             while (!quitteLogiciel)
@@ -117,8 +117,7 @@ namespace Restauration
                     case 1:
                         return true;
                     case 2:
-                        Console.WriteLine("WIP");
-                        break;
+                        return false;
                     default:
                         Console.WriteLine("Erreur dans le choix");
                         break;
@@ -134,6 +133,21 @@ namespace Restauration
             Restaurant restaurant = new Restaurant(nomRestaurant);
 
             return restaurant;
+        }
+
+        public static Restaurant chargementRestaurant()
+        {
+            String nomRestaurant;
+            Restaurant restaurantCharge;
+            Console.WriteLine("Veuillez indiquer le nom du restaurant à charger");
+            nomRestaurant = Console.ReadLine();
+            restaurantCharge = new Restaurant(nomRestaurant);
+
+            restaurantCharge.ChargementRestaurant();
+
+            return restaurantCharge;
+
+
         }
 
         public static int choixMenuPrincipal(Restaurant restaurant)

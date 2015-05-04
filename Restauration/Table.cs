@@ -21,6 +21,15 @@ namespace Restauration
             _nbPlacesMax = nbPlaceMax;
             _jumelage = jumelage;
         }
+
+        public Table(int numTable, int nbPlaceMax, bool jumelage)
+        {
+            _numTable = numTable;
+            _numTotale++;
+            _nbPlacesMax = nbPlaceMax;
+            _jumelage = jumelage;
+        }
+
         public override string ToString()
         {
             string ch = "";

@@ -12,6 +12,12 @@ namespace Restauration
             : base(nbPlacesMax, jumelage)//appel au constructeur de la classe Table
         {
         }
+
+
+        public TableRectangulaire(int numTable, int nbPlaceMax, bool jumelage)
+            :base(numTable,nbPlaceMax,jumelage)
+        { }
+
         public override string ToString()
         {
             string ch = "";
