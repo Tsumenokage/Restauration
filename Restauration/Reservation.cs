@@ -14,6 +14,7 @@ namespace Restauration
         public DateTime _dateReservation { get; private set; }
         private int _nbConvives { get; set; }
         private string _formuleRetenue { get; set; }
+        private List<Table> _listesTables;
 
         public Reservation(String _nomClient, String _numeroTelephone,
             DateTime _dateReservation, int _nbConvives, string _formuleRetenue)
@@ -25,6 +26,7 @@ namespace Restauration
             this._dateReservation = _dateReservation;
             this._nbConvives = _nbConvives;
             this._formuleRetenue = _formuleRetenue;
+            this._listesTables = new List<Table>();
         }
 
         public override string ToString()
@@ -40,6 +42,7 @@ namespace Restauration
 
             return res;
         }
+
 
     }
 }
