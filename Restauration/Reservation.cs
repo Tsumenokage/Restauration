@@ -13,11 +13,12 @@ namespace Restauration
         private String _numeroTelephone { get; set; }
         public DateTime _dateReservation { get; private set; }
         private int _nbConvives { get; set; }
-        private string _formuleRetenue { get; set; }
+        private String _formuleRetenue { get; set; }
+
         private List<Table> _listesTables;
 
         public Reservation(String _nomClient, String _numeroTelephone,
-            DateTime _dateReservation, int _nbConvives, string _formuleRetenue)
+            DateTime _dateReservation, int _nbConvives, String _formuleRetenue)
         {
             _numeroReservation = _numTotal + 1;
             _numTotal++;
@@ -43,6 +44,40 @@ namespace Restauration
             return res;
         }
 
+        public void GestionReservation (string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
+        {
+            int ressourceNecessairePreparation = 0;
+            int ressourcePreparation = 0;
+            int ressourceSalarie = 0;
+            bool ressourceValidation = true;
+            while (ressourceValidation != false)
+            {
+                foreach (Salarie S in R._listeSalaries)
+                {
+                    ressourceSalarie += S._ressource;
+                }
+                Formule form;
+                foreach (Formule Fo in R._listeFormules)
+                {
+                    form = R._listeFormules.Find(x => x._nomFormule == nomFormule);
+                    ressourceNecessairePreparation = ressourceNecessairePreparation + form._ressource * nbConvives;
+                }
+                foreach (Reservation Reserve in R._listeReservations)
+                {
+                    form = R._listeFormules.Find(x => x._nomFormule == this._formuleRetenue);
+                    TimeSpan tempsPreparation = new TimeSpan(form._dureePreparation.Hour, form._dureePreparation.Minute, form._dureePreparation.Second);
+                    DateTime finPreparation = Reserve._dateReservation + tempsPreparation;
+                    if (dateReservation < finPreparation && dateReservation > Reserve._dateReservation)
+                    {
+                        ressourcePreparation += form._ressource * Reserve._nbConvives;
+                    }
+                }
+                if (ressourceNecessairePreparation > (ressourceSalarie - ressourcePreparation))
+                {
+                    ressourceValidation = false;
+                }
+            }
+        }
 
     }
 }

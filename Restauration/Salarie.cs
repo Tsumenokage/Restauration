@@ -10,7 +10,7 @@ namespace Restauration
     {
         public int _numSalarie { get; protected set; } //numéro de la formule
         protected static int _numTotale;
-        protected int _ressource { get; set; }
+        public int _ressource { get; protected set; }
         public Salarie (int ressource)
         {
             _numSalarie = _numTotale + 1;

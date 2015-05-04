@@ -11,10 +11,10 @@ namespace Restauration
         public String _nomFormule { get; protected set; }
         public int _numFormule { get; protected set; } //numéro de la formule
         protected static int _numTotale;
-        protected DateTime _dureePresence { get; set; }
-        protected DateTime _dureePreparation { get; set; }
+        public DateTime _dureePresence { get; protected set; }
+        public DateTime _dureePreparation { get; protected set; }
         protected double _prix { get; set; }
-        protected int _ressource { get; set; }
+        public int _ressource { get; protected set; }
         public Formule(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource)
         {
             _numFormule = _numTotale + 1;

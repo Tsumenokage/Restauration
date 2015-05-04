@@ -10,9 +10,9 @@ namespace Restauration
     {
         public String _nomRestaurant { get; private set; }
         private List<Table> _listeTables { get; set; }
-        private List<Formule> _listeFormules { get; set; }
-        private List<Reservation> _listeReservations { get; set; }
-        private List<Salarie> _listeSalaries { get; set; }
+        public List<Formule> _listeFormules { get; private set; }
+        public List<Reservation> _listeReservations { get; private set; }
+        public List<Salarie> _listeSalaries { get; private set; }
         private enum _typeTable
         { 
             Carre , 

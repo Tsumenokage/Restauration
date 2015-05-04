@@ -92,7 +92,7 @@ namespace Restauration
                         break;
                     case 5:
                         restaurant.sauvegardeRestaurant();
-                            break;
+                        break;
                     case 6:
                         quitteLogiciel = true;
                         break;
