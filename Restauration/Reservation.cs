@@ -14,8 +14,7 @@ namespace Restauration
         public DateTime _dateReservation { get; private set; }
         private int _nbConvives { get; set; }
         private String _formuleRetenue { get; set; }
-
-        private List<Table> _listesTables;
+        private List<Table> _listeTablesReserve { get; set; }
 
         public Reservation(String _nomClient, String _numeroTelephone,
             DateTime _dateReservation, int _nbConvives, String _formuleRetenue)
@@ -27,7 +26,7 @@ namespace Restauration
             this._dateReservation = _dateReservation;
             this._nbConvives = _nbConvives;
             this._formuleRetenue = _formuleRetenue;
-            this._listesTables = new List<Table>();
+            this._listeTablesReserve = new List<Table>();
         }
 
         public override string ToString()
@@ -50,7 +49,8 @@ namespace Restauration
             int ressourcePreparation = 0;
             int ressourceSalarie = 0;
             bool ressourceValidation = true;
-            while (ressourceValidation != false)
+            bool tableValidation = true;
+            while (ressourceValidation != false || tableValidation != false)
             {
                 foreach (Salarie S in R._listeSalaries)
                 {
@@ -77,7 +77,38 @@ namespace Restauration
                     ressourceValidation = false;
                 }
             }
+            List<Table> tablesRestaurant = R._listeTables;
+            foreach (Reservation Rest in R._listeReservations)
+            {
+                foreach (Table T in Rest._listeTablesReserve)
+                {
+                    if (tablesRestaurant.Contains(T))
+                    {
+                        tablesRestaurant.Remove(T);
+                    }
+                }
+            }
+            if (tablesRestaurant.Count == 0)
+            {
+                tableValidation = false;
+            }
+            else
+            {
+                chercheTable(tablesRestaurant, nbConvives, R);
+            } 
         }
-
+        public List<Table> chercheTable(List<Table> tablesRestaurant, int nbConvives, Restaurant R)
+        {
+            List<Table> tables = new List<Table>();
+            foreach (Table T in tablesRestaurant)
+            {
+                if (T._nbPlacesMax == nbConvives & T._jumelage == false)
+                {
+                    tables.Add(T);
+                    return tables;
+                }
+                return tables;
+            }
+        }
     }
 }

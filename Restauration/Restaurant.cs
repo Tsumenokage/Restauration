@@ -9,7 +9,7 @@ namespace Restauration
     class Restaurant
     {
         public String _nomRestaurant { get; private set; }
-        private List<Table> _listeTables { get; set; }
+        public List<Table> _listeTables { get; private set; }
         public List<Formule> _listeFormules { get; private set; }
         public List<Reservation> _listeReservations { get; private set; }
         public List<Salarie> _listeSalaries { get; private set; }

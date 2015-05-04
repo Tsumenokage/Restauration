@@ -12,8 +12,8 @@ namespace Restauration
         //champs nécessaires à la création d'une classe table
         public int _numTable { get; protected set; } //numéro de la table
         protected static int _numTotale;
-        protected int _nbPlacesMax { get; set; } //nombre de place maximum de la table
-        protected bool _jumelage { get; set; } //O ou N en fonction de si la table peut être jumelée ou non
+        public int _nbPlacesMax { get; protected set; } //nombre de place maximum de la table
+        public bool _jumelage { get; protected set; } //O ou N en fonction de si la table peut être jumelée ou non
         public Table(int nbPlaceMax, bool jumelage)//contructeur de la classe table
         {
             _numTable = _numTotale + 1;
