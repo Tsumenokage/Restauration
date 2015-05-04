@@ -100,15 +100,41 @@ namespace Restauration
         public List<Table> chercheTable(List<Table> tablesRestaurant, int nbConvives, Restaurant R)
         {
             List<Table> tables = new List<Table>();
-            foreach (Table T in tablesRestaurant)
+            Table tableStockée = null;
+            bool tableTrouve = false;
+            while (tableTrouve)
             {
-                if (T._nbPlacesMax == nbConvives & T._jumelage == false)
+                foreach (Table T in tablesRestaurant)
                 {
-                    tables.Add(T);
-                    return tables;
+                    if (T._nbPlacesMax == nbConvives & !T._jumelage)// == false;
+                    {
+                        tables.Add(T);
+                        tableTrouve = true; 
+                    }
                 }
-                return tables;
+                foreach (Table T2 in tablesRestaurant)
+                {
+                    if (T2._nbPlacesMax > nbConvives & !T2._jumelage)
+                    {
+                        if (tables.Count == 0)
+                        { 
+                            tableStockée = T2;
+                            tables.Add(tableStockée); 
+                        }
+                        if (tableStockée._nbPlacesMax > T2._nbPlacesMax)
+                        {
+                            tables.Remove(tableStockée);
+                            tableStockée = T2;
+                            tables.Add(tableStockée);
+                        }
+                    }
+                }
+                if (tables.Count != 0)
+                {
+                    tableTrouve = true;
+                }
             }
+            return tables;
         }
     }
 }
