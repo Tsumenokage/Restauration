@@ -14,7 +14,7 @@ namespace Restauration
         public DateTime _dateReservation { get; private set; }
         private int _nbConvives { get; set; }
         private String _formuleRetenue { get; set; }
-        private List<Table> _listeTablesReserve { get; set; }
+        public List<Table> _listeTablesReserve { get; private set; }
 
         public Reservation(String _nomClient, String _numeroTelephone,
             DateTime _dateReservation, int _nbConvives, String _formuleRetenue)
@@ -39,18 +39,23 @@ namespace Restauration
             res += "    Date de Résèrvation : " + _dateReservation.ToString("g") + "\n";
             res += "    Nombre de convives : " + _nbConvives + "\n";
             res += "    Formule retenue : " + _formuleRetenue + "\n";
+            foreach (Table t in _listeTablesReserve)
+            {
+                res += "   Table réservée : " + t + "\n";
+            }
 
             return res;
         }
 
-        public void GestionReservation (string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
+        public List<Table> GestionReservation (string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
         {
+            List<Table> tablesSelection = null;
             int ressourceNecessairePreparation = 0;
             int ressourcePreparation = 0;
             int ressourceSalarie = 0;
             bool ressourceValidation = true;
             bool tableValidation = true;
-            while (ressourceValidation != false || tableValidation != false)
+            while (ressourceValidation != false & tableValidation != false)
             {
                 foreach (Salarie S in R._listeSalaries)
                 {
@@ -94,8 +99,17 @@ namespace Restauration
             }
             else
             {
-                chercheTable(tablesRestaurant, nbConvives, R);
-            } 
+                tablesSelection = chercheTable(tablesRestaurant, nbConvives, R);
+                if (tablesSelection.Count > 0)
+                {
+                    tableValidation = true;
+                }
+            }
+            foreach (Table t in tablesSelection)
+            {
+                _listeTablesReserve.Add(t);
+            }
+            return tablesSelection;
         }
         public List<Table> chercheTable(List<Table> tablesRestaurant, int nbConvives, Restaurant R)
         {

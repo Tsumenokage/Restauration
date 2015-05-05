@@ -383,8 +383,8 @@ namespace Restauration
             {
                 nomFormule = "rapide";
             }
-
             Reservation nouvelleReservation = new Reservation(nomClient, numTelephone, dateReservationClient, nbConvive, nomFormule);
+            List<Table> listeTables = nouvelleReservation.GestionReservation(nomFormule, nbConvive, dateReservationClient, this);
 
             if (validationOperation())
             {
