@@ -139,11 +139,16 @@ namespace Restauration
                     {
                         foreach (Table T4 in tablesRestaurant)
                         {
-                            if (T4._jumelage & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
+                            //jumelage table rectangulaire 4 places
+                            if (T4._jumelage & (T3._nbPlacesMax == 4) & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
                             {
-                                //marche qu'avec les tables rectangulaires 
-                                //avec les tables carrées il faut compter placesmax = ((_nbPlacesMax/4)*2)
-                                //car on perd les places où l'on colle les tables
+                                tables.Add(T3);
+                                tables.Add(T4);
+                                tableTrouve = true;
+                            }
+                            //jumelage table rectangulaire 4 places
+                            else if (T4._jumelage & (T3._nbPlacesMax > 4) & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax + T4._nbPlacesMax)-2 == nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
+                            {
                                 tables.Add(T3);
                                 tables.Add(T4);
                                 tableTrouve = true;
