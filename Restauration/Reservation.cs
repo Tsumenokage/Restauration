@@ -14,7 +14,7 @@ namespace Restauration
         public DateTime _dateReservation { get; private set; }
         private int _nbConvives { get; set; }
         private String _formuleRetenue { get; set; }
-        public List<Table> _listeTablesReserve { get; private set; }
+        public List<Table> _listeTablesReserve { get; set; }
 
         public Reservation(String _nomClient, String _numeroTelephone,
             DateTime _dateReservation, int _nbConvives, String _formuleRetenue)
@@ -49,13 +49,14 @@ namespace Restauration
 
         public List<Table> GestionReservation (string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
         {
+            Console.WriteLine("gestionreservation");
             List<Table> tablesSelection = null;
             int ressourceNecessairePreparation = 0;
             int ressourcePreparation = 0;
             int ressourceSalarie = 0;
             bool ressourceValidation = true;
             bool tableValidation = true;
-            while (ressourceValidation != false & tableValidation != false)
+            while (ressourceValidation != false || tableValidation != false)
             {
                 foreach (Salarie S in R._listeSalaries)
                 {
@@ -81,47 +82,58 @@ namespace Restauration
                 {
                     ressourceValidation = false;
                 }
-            }
-            List<Table> tablesRestaurant = R._listeTables;
-            foreach (Reservation Rest in R._listeReservations)
-            {
-                foreach (Table T in Rest._listeTablesReserve)
+                Console.WriteLine("ici");
+                List<Table> tablesRestaurant = R._listeTables;
+                foreach (Reservation Rest in R._listeReservations)
                 {
-                    if (tablesRestaurant.Contains(T))
+                    foreach (Table T in Rest._listeTablesReserve)
                     {
-                        tablesRestaurant.Remove(T);
+                        if (tablesRestaurant.Contains(T))
+                        {
+                            tablesRestaurant.Remove(T);
+                        }
                     }
                 }
-            }
-            if (tablesRestaurant.Count == 0)
-            {
-                tableValidation = false;
-            }
-            else
-            {
                 tablesSelection = chercheTable(tablesRestaurant, nbConvives, R);
-                if (tablesSelection.Count > 0)
+                Console.WriteLine("if");
+                if (tablesSelection.Count == 0)
                 {
-                    tableValidation = true;
+                    Console.WriteLine("test");
+                    tableValidation = false;
                 }
-            }
-            foreach (Table t in tablesSelection)
-            {
-                _listeTablesReserve.Add(t);
+                else
+                {
+                    Console.WriteLine("test");
+                    foreach (Table t in tablesSelection)
+                    {
+                        t.ToString();
+                    }
+                    if (tablesSelection.Count > 0)
+                    {
+                        tableValidation = true;
+                    }
+                }
+                foreach (Table t in tablesSelection)
+                {
+                    _listeTablesReserve.Add(t);
+                }
             }
             return tablesSelection;
         }
         public List<Table> chercheTable(List<Table> tablesRestaurant, int nbConvives, Restaurant R)
         {
+            Console.WriteLine("test5555");
             List<Table> tables = new List<Table>();
             Table tableStockée = null;
             bool tableTrouve = false;
-            while (tableTrouve)
+            while (tableTrouve != true)
             {
+                Console.WriteLine("test");
                 foreach (Table T in tablesRestaurant)
                 {
                     if (T._nbPlacesMax == nbConvives & !T._jumelage)// == false;
                     {
+                        Console.WriteLine("premier if");
                         tables.Add(T);
                         tableTrouve = true; 
                     }
@@ -143,6 +155,7 @@ namespace Restauration
                         }
                     }
                 }
+                Console.WriteLine("...");
                 if (tables.Count != 0)
                 {
                     tableTrouve = true;
@@ -176,6 +189,8 @@ namespace Restauration
                         }
                     }
                 }
+                Console.WriteLine("euh");
+                tableTrouve = true;
             }
             return tables;
         }

@@ -385,6 +385,7 @@ namespace Restauration
             }
             Reservation nouvelleReservation = new Reservation(nomClient, numTelephone, dateReservationClient, nbConvive, nomFormule);
             List<Table> listeTables = nouvelleReservation.GestionReservation(nomFormule, nbConvive, dateReservationClient, this);
+            nouvelleReservation._listeTablesReserve = listeTables;
 
             if (validationOperation())
             {
