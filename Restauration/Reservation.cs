@@ -73,7 +73,7 @@ namespace Restauration
                 foreach (Reservation Reserve in R._listeReservations)
                 {
                     form = R._listeFormules.Find(x => x._nomFormule == this._formuleRetenue);
-                    TimeSpan tempsPreparation = new TimeSpan(form._dureePreparation.Hour, form._dureePreparation.Minute,0);
+                    TimeSpan tempsPreparation = new TimeSpan (form._dureePreparation.Hour, form._dureePreparation.Minute,0);
                     DateTime finPreparation = Reserve._dateReservation + tempsPreparation;
                     if (dateReservation < finPreparation && dateReservation > Reserve._dateReservation)
                     {
