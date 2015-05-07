@@ -57,6 +57,7 @@ namespace Restauration
             bool ressourceValidation = true;
             bool tableValidation = true;
             int compteur = 0;
+            DateTime finPreparation = new DateTime();
             while (ressourceValidation != false && tableValidation != false && compteur ==0)
             {
                 foreach (Salarie S in R._listeSalaries)
@@ -73,8 +74,9 @@ namespace Restauration
                 foreach (Reservation Reserve in R._listeReservations)
                 {
                     form = R._listeFormules.Find(x => x._nomFormule == this._formuleRetenue);
-                    TimeSpan tempsPreparation = new TimeSpan (form._dureePreparation.Hour, form._dureePreparation.Minute,0);
-                    DateTime finPreparation = Reserve._dateReservation + tempsPreparation;
+                    finPreparation = Reserve._dateReservation;
+                    finPreparation.AddHours(form._dureePreparation.Hour);
+                    finPreparation.AddMinutes(form._dureePreparation.Minute);
                     if (dateReservation < finPreparation && dateReservation > Reserve._dateReservation)
                     {
                         ressourcePreparation += form._ressource * Reserve._nbConvives;
