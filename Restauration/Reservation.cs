@@ -57,7 +57,7 @@ namespace Restauration
             bool ressourceValidation = true;
             bool tableValidation = true;
             int compteur = 0;
-            while (ressourceValidation != false || tableValidation != false || compteur ==0)
+            while (ressourceValidation != false && tableValidation != false && compteur ==0)
             {
                 foreach (Salarie S in R._listeSalaries)
                 {
@@ -73,7 +73,7 @@ namespace Restauration
                 foreach (Reservation Reserve in R._listeReservations)
                 {
                     form = R._listeFormules.Find(x => x._nomFormule == this._formuleRetenue);
-                    TimeSpan tempsPreparation = new TimeSpan(form._dureePreparation.Hour, form._dureePreparation.Minute, form._dureePreparation.Second);
+                    TimeSpan tempsPreparation = new TimeSpan(form._dureePreparation.Hour, form._dureePreparation.Minute,0);
                     DateTime finPreparation = Reserve._dateReservation + tempsPreparation;
                     if (dateReservation < finPreparation && dateReservation > Reserve._dateReservation)
                     {
@@ -135,59 +135,65 @@ namespace Restauration
             Table tableNonJumelee = null;
             Table tableStockée = null;
             bool tableTrouve = false;
-            while (tableTrouve != true)
+            while (tableTrouve == false)
             {
                 Console.WriteLine("test");
                 tableNonJumelee = tablesRestaurant.Find(x => x._nbPlacesMax == nbConvives && x._jumelage == false);
                 if (tableNonJumelee != null)
-                    tableTrouve = true;
-                foreach (Table T2 in tablesRestaurant)
                 {
-                    if (T2._nbPlacesMax > nbConvives & !T2._jumelage)
+                    tables.Add(tableNonJumelee); 
+                    tableTrouve = true;
+                }
+                else
+                {
+                    foreach (Table T2 in tablesRestaurant)
                     {
-                        if (tables.Count == 0)
-                        { 
-                            tableStockée = T2;
-                            tables.Add(tableStockée); 
-                        }
-                        if (tableStockée._nbPlacesMax > T2._nbPlacesMax)
+                        if (T2._nbPlacesMax > nbConvives & !T2._jumelage)
                         {
-                            tables.Remove(tableStockée);
-                            tableStockée = T2;
-                            tables.Add(tableStockée);
+                            if (tables.Count == 0)
+                            { 
+                                tableStockée = T2;
+                                tables.Add(tableStockée); 
+                            }
+                            if (tableStockée._nbPlacesMax > T2._nbPlacesMax)
+                            {
+                                tables.Remove(tableStockée);
+                                tableStockée = T2;
+                                tables.Add(tableStockée);
+                            }
                         }
                     }
-                }
-                Console.WriteLine("...");
-                if (tables.Count != 0)
-                {
-                    tableTrouve = true;
-                }
-                foreach (Table T3 in tablesRestaurant)
-                {
-                    if (T3._jumelage)
+                    Console.WriteLine("...");
+                    if (tables.Count != 0)
                     {
-                        foreach (Table T4 in tablesRestaurant)
+                        tableTrouve = true;
+                    }
+                    foreach (Table T3 in tablesRestaurant)
+                    {
+                        if (T3._jumelage)
                         {
-                            //jumelage table rectangulaire 4 places
-                            if (T4._jumelage & (T3._nbPlacesMax == 4) & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
+                            foreach (Table T4 in tablesRestaurant)
                             {
-                                tables.Add(T3);
-                                tables.Add(T4);
-                                tableTrouve = true;
-                            }
-                            //jumelage table rectangulaire 4 places
-                            else if (T4._jumelage & (T3._nbPlacesMax > 4) & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax + T4._nbPlacesMax)-2 == nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
-                            {
-                                tables.Add(T3);
-                                tables.Add(T4);
-                                tableTrouve = true;
-                            }
-                            else if (T4._jumelage & (T3._nbPlacesMax == T4._nbPlacesMax) & (((T3._nbPlacesMax+T4._nbPlacesMax) - ((T3._nbPlacesMax/4)*2))==nbConvives) & (T3 is TableCarree) & (T4 is TableCarree))
-                            {
-                                tables.Add(T3);
-                                tables.Add(T4);
-                                tableTrouve = true;
+                                //jumelage table rectangulaire 4 places
+                                if (T4._jumelage & (T3._numTable != T4._numTable) & (T3._nbPlacesMax == 4) & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax+T4._nbPlacesMax)==nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
+                                {
+                                    tables.Add(T3);
+                                    tables.Add(T4);
+                                    tableTrouve = true;
+                                }
+                                //jumelage table rectangulaire  > 4 places
+                                else if (T4._jumelage & (T3._nbPlacesMax > 4) & (T3._nbPlacesMax == T4._nbPlacesMax) & ((T3._nbPlacesMax + T4._nbPlacesMax)-2 == nbConvives) & (T3 is TableRectangulaire) & (T4 is TableRectangulaire))
+                                {
+                                    tables.Add(T3);
+                                    tables.Add(T4);
+                                    tableTrouve = true;
+                                }
+                                else if (T4._jumelage & (T3._nbPlacesMax == T4._nbPlacesMax) & (((T3._nbPlacesMax+T4._nbPlacesMax) - ((T3._nbPlacesMax/4)*2))==nbConvives) & (T3 is TableCarree) & (T4 is TableCarree))
+                                {
+                                    tables.Add(T3);
+                                    tables.Add(T4);
+                                    tableTrouve = true;
+                                }
                             }
                         }
                     }
