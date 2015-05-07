@@ -56,7 +56,8 @@ namespace Restauration
             int ressourceSalarie = 0;
             bool ressourceValidation = true;
             bool tableValidation = true;
-            while (ressourceValidation != false || tableValidation != false)
+            int compteur = 0;
+            while (ressourceValidation != false || tableValidation != false || compteur ==0)
             {
                 foreach (Salarie S in R._listeSalaries)
                 {
@@ -68,6 +69,7 @@ namespace Restauration
                     form = R._listeFormules.Find(x => x._nomFormule == nomFormule);
                     ressourceNecessairePreparation = ressourceNecessairePreparation + form._ressource * nbConvives;
                 }
+                Console.WriteLine(ressourceNecessairePreparation);
                 foreach (Reservation Reserve in R._listeReservations)
                 {
                     form = R._listeFormules.Find(x => x._nomFormule == this._formuleRetenue);
@@ -78,11 +80,12 @@ namespace Restauration
                         ressourcePreparation += form._ressource * Reserve._nbConvives;
                     }
                 }
+                Console.WriteLine(ressourcePreparation);
                 if (ressourceNecessairePreparation > (ressourceSalarie - ressourcePreparation))
                 {
                     ressourceValidation = false;
                 }
-                Console.WriteLine("ici");
+                Console.WriteLine(ressourceNecessairePreparation);
                 List<Table> tablesRestaurant = R._listeTables;
                 foreach (Reservation Rest in R._listeReservations)
                 {
@@ -93,6 +96,10 @@ namespace Restauration
                             tablesRestaurant.Remove(T);
                         }
                     }
+                }
+                foreach (Table T in tablesRestaurant)
+                {
+                    Console.WriteLine(T.ToString());
                 }
                 tablesSelection = chercheTable(tablesRestaurant, nbConvives, R);
                 Console.WriteLine("if");
@@ -117,6 +124,7 @@ namespace Restauration
                 {
                     _listeTablesReserve.Add(t);
                 }
+                compteur += 1;
             }
             return tablesSelection;
         }
@@ -124,20 +132,15 @@ namespace Restauration
         {
             Console.WriteLine("test5555");
             List<Table> tables = new List<Table>();
+            Table tableNonJumelee = null;
             Table tableStockée = null;
             bool tableTrouve = false;
             while (tableTrouve != true)
             {
                 Console.WriteLine("test");
-                foreach (Table T in tablesRestaurant)
-                {
-                    if (T._nbPlacesMax == nbConvives & !T._jumelage)// == false;
-                    {
-                        Console.WriteLine("premier if");
-                        tables.Add(T);
-                        tableTrouve = true; 
-                    }
-                }
+                tableNonJumelee = tablesRestaurant.Find(x => x._nbPlacesMax == nbConvives && x._jumelage == false);
+                if (tableNonJumelee != null)
+                    tableTrouve = true;
                 foreach (Table T2 in tablesRestaurant)
                 {
                     if (T2._nbPlacesMax > nbConvives & !T2._jumelage)
@@ -190,7 +193,7 @@ namespace Restauration
                     }
                 }
                 Console.WriteLine("euh");
-                tableTrouve = true;
+                Console.ReadLine();
             }
             return tables;
         }
