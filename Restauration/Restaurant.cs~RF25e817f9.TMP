@@ -668,7 +668,7 @@ namespace Restauration
             catch (Exception)
             {
                 
-                
+                throw;
             }
 
             try
@@ -682,33 +682,23 @@ namespace Restauration
                     String typeFormule = formule.Attributes[0].Value;
 
                     int numeroFormule = int.Parse(formule.SelectSingleNode("numeroFormule").InnerText);
-
                     String nomFormule = formule.SelectSingleNode("nomFormule").InnerText;
 
                     String dureePresence = "01/01/2000 ";
-                    dureePresence += formule.SelectSingleNode("dureePresence").InnerText;
+                    dureePresence += formule.SelectSingleNode(dureePresence).InnerText;
                     DateTime Presence = Convert.ToDateTime(dureePresence);
 
                     String dureePreparation = "01/01/2000 ";
-                    dureePreparation += formule.SelectSingleNode("dureePreparation").InnerText;
-                    DateTime Preparation = Convert.ToDateTime(dureePreparation);
+                    dureePresence += formule.SelectSingleNode(dureePreparation).InnerText;
+                    DateTime Presence = Convert.ToDateTime(dureePresence);
 
                     int prix = int.Parse(formule.SelectSingleNode("prix").InnerText);
-                    
                     int ressource = int.Parse(formule.SelectSingleNode("ressource").InnerText);
 
 
-                    if (typeFormule == "Restauration.FormuleConsommation")
-                        formuleAjoutee = new FormuleConsommation(nomFormule, Presence, Preparation, prix, ressource);
-                    else if (typeFormule == "Restauration.FormuleEmporter")
-                        formuleAjoutee = new FormuleEmporter(nomFormule, Presence, Preparation, prix, ressource);
-                    else if (typeFormule == "Restauration.FormuleGastronomique")
-                        formuleAjoutee = new FormuleGastronomique(nomFormule, Presence, Preparation, prix, ressource);
-                    else if (typeFormule == "Restauration.FormuleNormale")
-                        formuleAjoutee = new FormuleNormale(nomFormule, Presence, Preparation, prix, ressource);
-                    else
-                        formuleAjoutee = new FormuleRapide(nomFormule, Presence, Preparation, prix, ressource);
 
+                    if (typeFormule == "Restauration.FormuleConsommation")
+                        formuleAjoutee = new TableRonde(numTable,nbPlaceMax,jumelable);
 
                     this._listeFormules.Add(formuleAjoutee);
                    
@@ -716,36 +706,8 @@ namespace Restauration
             }
             catch (Exception)
             {
-            }
-
-            try
-            {
-                XmlNode noeudSalarie = noeud.SelectSingleNode("listesSalaries");
-                XmlNodeList salariesEnregistree = noeudSalarie.SelectNodes("salarié");
-
-                foreach (XmlNode salarie in salariesEnregistree)
-                {
-                    Salarie salarieAjoute;
-                    String typeTable = salarie.Attributes[0].Value;
-                    int numero = int.Parse(salarie.SelectSingleNode("numeroSalarie").InnerText);
-                    int ressource = int.Parse(salarie.SelectSingleNode("ressourceSalarie").InnerText);
-
-
-                    if (typeTable == "Restauration.SalarieChefCuisine")
-                        salarieAjoute = new SalarieChefCuisine(numero, ressource);
-                    else if (typeTable == "Restauration.SalarieChefPartie")
-                        salarieAjoute = new SalarieChefPartie(numero, ressource);
-                    else
-                        salarieAjoute = new SalarieCommis(numero, ressource);
-
-                    this._listeSalaries.Add(salarieAjoute);
-
-                }
-            }
-            catch (Exception)
-            {
-
-
+                
+                throw;
             }
 
             return true;

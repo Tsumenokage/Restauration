@@ -8,6 +8,10 @@ namespace Restauration
     class SalarieCommis : Salarie
     {
         public SalarieCommis () : base(50){}
+
+        public SalarieCommis(int numero, int ressource) : base(numero, ressource) { }
+
+
         public override string ToString()
         {
             string ch = "";

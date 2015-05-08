@@ -17,6 +17,14 @@ namespace Restauration
             _numTotale++;
             _ressource = ressource;
         }
+
+        public Salarie(int numero, int ressource)
+        {
+            _numSalarie = numero;
+            _numTotale++;
+            _ressource = ressource;
+        }
+
         public override string ToString()
         {
             string ch = "";
