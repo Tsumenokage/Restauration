@@ -356,33 +356,45 @@ namespace Restauration
                 Console.WriteLine("Nombre de convives :");
             } while (!int.TryParse(Console.ReadLine(), out nbConvive));
 
-            do
+            bool formuleExiste = false;
+            while(!formuleExiste)
             {
-             Console.WriteLine("Type de formule retenue ?");
-                saisie = Console.ReadKey(true);
-                if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.A || saisie.Key == ConsoleKey.G || saisie.Key == ConsoleKey.N || saisie.Key == ConsoleKey.R)
-                    verification = true;
-            } while (verification == false);
-            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
-            {
-                nomFormule = "consommation";
+                do
+                {
+                    Console.WriteLine("Type de formule retenue ?  (formule consommation(c), à emporter(a), gastronomique(g), normale(n) ou rapide(r))");
+                    saisie = Console.ReadKey(true);
+                    if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.A || saisie.Key == ConsoleKey.G || saisie.Key == ConsoleKey.N || saisie.Key == ConsoleKey.R)
+                        verification = true;
+                } while (verification == false);
+                if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+                {
+                    nomFormule = "consommation";
+                }
+                else if (saisie.Key == ConsoleKey.A)
+                {
+                    nomFormule = "à emporter";
+                }
+                else if (saisie.Key == ConsoleKey.G)
+                {
+                    nomFormule = "gastronomique";
+                }
+                else if (saisie.Key == ConsoleKey.N)
+                {
+                    nomFormule = "normale";
+                }
+                else if (saisie.Key == ConsoleKey.R)
+                {
+                    nomFormule = "rapide";
+                }
+
+                Formule existe = this._listeFormules.Find(x => x._nomFormule == nomFormule);
+
+                if (existe != null)
+                    formuleExiste = true;
             }
-            else if (saisie.Key == ConsoleKey.A)
-            {
-                nomFormule = "à emporter";
-            }
-            else if (saisie.Key == ConsoleKey.G)
-            {
-                nomFormule = "gastronomique";
-            }
-            else if (saisie.Key == ConsoleKey.N)
-            {
-                nomFormule = "normale";
-            }
-            else if (saisie.Key == ConsoleKey.R)
-            {
-                nomFormule = "rapide";
-            }
+
+
+
             Reservation nouvelleReservation = new Reservation(nomClient, numTelephone, dateReservationClient, nbConvive, nomFormule);
             bool reservationOk = nouvelleReservation.GestionReservation(nomFormule, nbConvive, dateReservationClient, this);
 
