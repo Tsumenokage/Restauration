@@ -34,7 +34,7 @@ namespace Restauration
         public void sauvegardeSalarie(XmlDocument saveRestau, XmlNode listeSalaries)
         {
             //On crée un noeud racine qui correspondra à un salarié
-            XmlNode rootSalarie = saveRestau.CreateElement("salarié");
+            XmlNode rootSalarie = saveRestau.CreateElement("salarie");
             //On définie un attribut permettant de distinguer le type de formule
             XmlAttribute typeSalarie = saveRestau.CreateAttribute("typeSalarie");
             typeSalarie.Value = this.GetType().ToString();

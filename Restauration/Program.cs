@@ -139,11 +139,14 @@ namespace Restauration
         {
             String nomRestaurant;
             Restaurant restaurantCharge;
-            Console.WriteLine("Veuillez indiquer le nom du restaurant à charger");
-            nomRestaurant = Console.ReadLine();
-            restaurantCharge = new Restaurant(nomRestaurant);
+            do
+            {
+                Console.WriteLine("Veuillez indiquer le nom du restaurant à charger");
+                nomRestaurant = Console.ReadLine();
+                restaurantCharge = new Restaurant(nomRestaurant);
+            } while (!restaurantCharge.ChargementRestaurant());
 
-            restaurantCharge.ChargementRestaurant();
+            
 
             return restaurantCharge;
 

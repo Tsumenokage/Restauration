@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace Restauration
 {
@@ -27,6 +28,20 @@ namespace Restauration
             this._nbConvives = _nbConvives;
             this._formuleRetenue = _formuleRetenue;
             this._listeTablesReserve = new List<Table>();
+            
+        }
+
+        public Reservation(int _numeroReservation, String _nomClient, String _numeroTelephone,
+            DateTime _dateReservation, int _nbConvives, String _formuleRetenue, List<Table> _listeTablesReserve)
+        {
+            this._numeroReservation = _numeroReservation;
+            _numTotal++;
+            this._nomClient = _nomClient;
+            this._numeroTelephone = _numeroTelephone;
+            this._dateReservation = _dateReservation;
+            this._nbConvives = _nbConvives;
+            this._formuleRetenue = _formuleRetenue;
+            this._listeTablesReserve = _listeTablesReserve;
             
         }
 
@@ -281,6 +296,53 @@ namespace Restauration
             }
 
             return tablesReservations;
+        }
+
+        public void sauvegardeReservation(XmlDocument saveRestau, XmlNode listeReservations)
+        {
+            //On crée un noeud racine qui correspondra à une reservation
+            XmlNode rootReservation = saveRestau.CreateElement("reservation");
+
+            //On enregistre les différentes informations de la table dans le noeud racine
+            XmlNode numResa = saveRestau.CreateElement("NumeroReservation");
+            XmlNode nomClient = saveRestau.CreateElement("nomClient");
+            XmlNode numeroTelephone = saveRestau.CreateElement("NumeroTelephones");
+            XmlNode dateReservation = saveRestau.CreateElement("dateReservation");
+            XmlNode nbConvives = saveRestau.CreateElement("NombreConvives");
+            XmlNode formuleRetenue = saveRestau.CreateElement("formuleRetenue");
+
+            //On crée un noeud qui correspondra à la listes des tables utilisé par la réservation
+            XmlNode tableReserve = saveRestau.CreateElement("tablesReservees");
+
+            foreach (Table table in _listeTablesReserve)
+            {
+                XmlNode numTable = saveRestau.CreateElement("NumeroTableReservee");
+                numTable.InnerText = table._numTable.ToString();
+                tableReserve.AppendChild(numTable);
+
+            }
+
+            numResa.InnerText = this._numeroReservation.ToString();
+            nomClient.InnerText = this._nomClient.ToString();
+            numeroTelephone.InnerText = this._numeroTelephone.ToString();
+            dateReservation.InnerText = this._dateReservation.ToString();
+            nbConvives.InnerText = this._nbConvives.ToString();
+            formuleRetenue.InnerText = this._formuleRetenue.ToString();
+            
+
+
+
+            rootReservation.AppendChild(numResa);
+            rootReservation.AppendChild(nomClient);
+            rootReservation.AppendChild(numeroTelephone);
+            rootReservation.AppendChild(dateReservation);
+            rootReservation.AppendChild(nbConvives);
+            rootReservation.AppendChild(formuleRetenue);
+            rootReservation.AppendChild(tableReserve);
+
+            //On ajoute le noeud qui contiendra les informations de la reservations.
+            listeReservations.AppendChild(rootReservation);
+
         }
     }
 }

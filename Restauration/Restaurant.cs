@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace Restauration
 {
@@ -413,11 +414,25 @@ namespace Restauration
         //Mettre en place des expression régulière pour vérifier si le format entrer est correcte
         public DateTime dateReservation()
         {
-            Console.WriteLine("Date de la reservation : (format jj/mm/aaaa)");
-            String date = Console.ReadLine();
-            Console.WriteLine("Heure de la reservation : (format hh:mm)");
-            date += " " + Console.ReadLine();
+            System.Text.RegularExpressions.Regex myRegexDate = new Regex(@"^\d{1,2}\/\d{1,2}\/\d{4}$");
+            System.Text.RegularExpressions.Regex myRegexHeure = new Regex(@"([0-1][0-9]|2[0-3]):[0-5][0-9]");
 
+            String date = "";
+            String heure = "";
+
+            do
+            {
+                Console.WriteLine("Date de la reservation : (format jj/mm/aaaa)");
+                date = Console.ReadLine();
+            } while (!myRegexDate.IsMatch(date));
+
+            do
+            {
+                Console.WriteLine("Heure de la reservation : (format hh:mm)");
+                heure = Console.ReadLine();
+            } while (!myRegexHeure.IsMatch(heure));
+
+            date += " " + heure;
             DateTime dateReservation = Convert.ToDateTime(date);
             return dateReservation;
         }
@@ -617,7 +632,13 @@ namespace Restauration
 
 
             //Sauvegarde de la liste des reservations
+            XmlNode listeReservations = saveRestau.CreateElement("listeReservations");
+            foreach (Reservation reserv in this._listeReservations)
+            {
+                reserv.sauvegardeReservation(saveRestau, listeReservations);
+            }
 
+            restaurantNode.AppendChild(listeReservations);
 
             saveRestau.Save(this._nomRestaurant + ".xml");
 
@@ -633,13 +654,14 @@ namespace Restauration
             }
             catch(Exception e)
             {
-                Console.WriteLine(e);
-                Console.ReadLine();
+                Console.WriteLine("Fichier Xml inexistant");
                 return false;
             }
 
+
             XmlNode noeud = xmlDoc.DocumentElement;
             Console.WriteLine(noeud.ToString());
+
 
             try
             {
@@ -648,115 +670,124 @@ namespace Restauration
             }
             catch (Exception)
             {
-                
-                throw;
+
+                return false;
             }
 
-            try
+            XmlNode noeudTables = noeud.SelectSingleNode("listeTables");
+            XmlNodeList tablesEnregistree = noeudTables.SelectNodes("table");
+
+            foreach (XmlNode table in tablesEnregistree)
             {
-                XmlNode noeudTables = noeud.SelectSingleNode("listeTables");
-                XmlNodeList tablesEnregistree = noeudTables.SelectNodes("table");
-
-                foreach (XmlNode table in tablesEnregistree)
-                {
-                    Table tableAjoutee;
-                    String typeTable = table.Attributes[0].Value;
-                    int numTable = int.Parse(table.SelectSingleNode("NumeroTable").InnerText);
-                    int nbPlaceMax = int.Parse(table.SelectSingleNode("CapaciteTable").InnerText);
-                    bool jumelable = bool.Parse(table.SelectSingleNode("Jumelable").InnerText);
+                Table tableAjoutee;
+                String typeTable = table.Attributes[0].Value;
+                int numTable = int.Parse(table.SelectSingleNode("NumeroTable").InnerText);
+                int nbPlaceMax = int.Parse(table.SelectSingleNode("CapaciteTable").InnerText);
+                bool jumelable = bool.Parse(table.SelectSingleNode("Jumelable").InnerText);
 
 
-                    if (typeTable == "Restauration.TableRonde")
-                        tableAjoutee = new TableRonde(numTable,nbPlaceMax,jumelable);
-                    else if (typeTable == "Restauration.TableCarree")
-                        tableAjoutee = new TableCarree(numTable, nbPlaceMax, jumelable);
-                    else
-                        tableAjoutee = new TableRectangulaire(numTable, nbPlaceMax, jumelable);
+                if (typeTable == "Restauration.TableRonde")
+                    tableAjoutee = new TableRonde(numTable,nbPlaceMax,jumelable);
+                else if (typeTable == "Restauration.TableCarree")
+                    tableAjoutee = new TableCarree(numTable, nbPlaceMax, jumelable);
+                else
+                    tableAjoutee = new TableRectangulaire(numTable, nbPlaceMax, jumelable);
 
-                    this._listeTables.Add(tableAjoutee);
+                this._listeTables.Add(tableAjoutee);
                    
-                }
             }
-            catch (Exception)
+   
+
+            XmlNode noeudFormules = noeud.SelectSingleNode("listesFormules");
+            XmlNodeList formulesEnregistree = noeudFormules.SelectNodes("formule");
+
+            foreach (XmlNode formule in formulesEnregistree)
             {
-                
-                
-            }
+                Formule formuleAjoutee;
+                String typeFormule = formule.Attributes[0].Value;
 
-            try
-            {
-                XmlNode noeudFormules = noeud.SelectSingleNode("listesFormules");
-                XmlNodeList formulesEnregistree = noeudFormules.SelectNodes("formule");
+                int numeroFormule = int.Parse(formule.SelectSingleNode("numeroFormule").InnerText);
 
-                foreach (XmlNode formule in formulesEnregistree)
-                {
-                    Formule formuleAjoutee;
-                    String typeFormule = formule.Attributes[0].Value;
+                String nomFormule = formule.SelectSingleNode("nomFormule").InnerText;
 
-                    int numeroFormule = int.Parse(formule.SelectSingleNode("numeroFormule").InnerText);
+                String dureePresence = "01/01/2000 ";
+                dureePresence += formule.SelectSingleNode("dureePresence").InnerText;
+                DateTime Presence = Convert.ToDateTime(dureePresence);
 
-                    String nomFormule = formule.SelectSingleNode("nomFormule").InnerText;
+                String dureePreparation = "01/01/2000 ";
+                dureePreparation += formule.SelectSingleNode("dureePreparation").InnerText;
+                DateTime Preparation = Convert.ToDateTime(dureePreparation);
 
-                    String dureePresence = "01/01/2000 ";
-                    dureePresence += formule.SelectSingleNode("dureePresence").InnerText;
-                    DateTime Presence = Convert.ToDateTime(dureePresence);
-
-                    String dureePreparation = "01/01/2000 ";
-                    dureePreparation += formule.SelectSingleNode("dureePreparation").InnerText;
-                    DateTime Preparation = Convert.ToDateTime(dureePreparation);
-
-                    int prix = int.Parse(formule.SelectSingleNode("prix").InnerText);
+                int prix = int.Parse(formule.SelectSingleNode("prix").InnerText);
                     
-                    int ressource = int.Parse(formule.SelectSingleNode("ressource").InnerText);
+                int ressource = int.Parse(formule.SelectSingleNode("ressource").InnerText);
+
+                if (typeFormule == "Restauration.FormuleConsommation")
+                    formuleAjoutee = new FormuleConsommation(nomFormule, Presence, Preparation, prix, ressource);
+                else if (typeFormule == "Restauration.FormuleEmporter")
+                    formuleAjoutee = new FormuleEmporter(nomFormule, Presence, Preparation, prix, ressource);
+                else if (typeFormule == "Restauration.FormuleGastronomique")
+                    formuleAjoutee = new FormuleGastronomique(nomFormule, Presence, Preparation, prix, ressource);
+                else if (typeFormule == "Restauration.FormuleNormale")
+                    formuleAjoutee = new FormuleNormale(nomFormule, Presence, Preparation, prix, ressource);
+                else
+                    formuleAjoutee = new FormuleRapide(nomFormule, Presence, Preparation, prix, ressource);
 
 
-                    if (typeFormule == "Restauration.FormuleConsommation")
-                        formuleAjoutee = new FormuleConsommation(nomFormule, Presence, Preparation, prix, ressource);
-                    else if (typeFormule == "Restauration.FormuleEmporter")
-                        formuleAjoutee = new FormuleEmporter(nomFormule, Presence, Preparation, prix, ressource);
-                    else if (typeFormule == "Restauration.FormuleGastronomique")
-                        formuleAjoutee = new FormuleGastronomique(nomFormule, Presence, Preparation, prix, ressource);
-                    else if (typeFormule == "Restauration.FormuleNormale")
-                        formuleAjoutee = new FormuleNormale(nomFormule, Presence, Preparation, prix, ressource);
-                    else
-                        formuleAjoutee = new FormuleRapide(nomFormule, Presence, Preparation, prix, ressource);
-
-
-                    this._listeFormules.Add(formuleAjoutee);
+                this._listeFormules.Add(formuleAjoutee);
                    
-                }
-            }
-            catch (Exception)
-            {
             }
 
-            try
-            {
-                XmlNode noeudSalarie = noeud.SelectSingleNode("listesSalaries");
-                XmlNodeList salariesEnregistree = noeudSalarie.SelectNodes("salarié");
 
-                foreach (XmlNode salarie in salariesEnregistree)
+            XmlNode noeudSalarie = noeud.SelectSingleNode("listesSalaries");
+            XmlNodeList salariesEnregistree = noeudSalarie.SelectNodes("salarie");
+
+            foreach (XmlNode salarie in salariesEnregistree)
+            {
+                Salarie salarieAjoute;
+                String typeTable = salarie.Attributes[0].Value;
+                int numero = int.Parse(salarie.SelectSingleNode("numeroSalarie").InnerText);
+                int ressource = int.Parse(salarie.SelectSingleNode("ressourceSalarie").InnerText);
+                
+                if (typeTable == "Restauration.SalarieChefCuisine")
+                    salarieAjoute = new SalarieChefCuisine(numero, ressource);
+                else if (typeTable == "Restauration.SalarieChefPartie")
+                    salarieAjoute = new SalarieChefPartie(numero, ressource);
+                else
+                    salarieAjoute = new SalarieCommis(numero, ressource);
+
+                this._listeSalaries.Add(salarieAjoute);
+
+            }
+
+            XmlNode noeudFormule = noeud.SelectSingleNode("listeReservations");
+            XmlNodeList reservationEnregistree = noeudFormule.SelectNodes("reservation");
+
+            foreach (XmlNode reservation in reservationEnregistree)
+            {
+                Reservation reservationAjout;
+                int numeroReservation = int.Parse(reservation.SelectSingleNode("NumeroReservation").InnerText);
+                String nomClient = reservation.SelectSingleNode("NumeroTelephones").InnerText;
+                String numeroClient = reservation.SelectSingleNode("nomClient").InnerText;
+                DateTime dateReservation = Convert.ToDateTime(reservation.SelectSingleNode("dateReservation").InnerText);
+                int nombreConvives = int.Parse(reservation.SelectSingleNode("NombreConvives").InnerText);
+                String formuleRetenue = reservation.SelectSingleNode("formuleRetenue").InnerText;
+
+                //On s'occupe des tables utilisées par la reservations
+                List<Table> tablesReservee = new List<Table>();
+
+                XmlNodeList tablesReservations = reservation.SelectNodes("tablesReservees");
+
+                foreach (XmlNode table in tablesReservations)
                 {
-                    Salarie salarieAjoute;
-                    String typeTable = salarie.Attributes[0].Value;
-                    int numero = int.Parse(salarie.SelectSingleNode("numeroSalarie").InnerText);
-                    int ressource = int.Parse(salarie.SelectSingleNode("ressourceSalarie").InnerText);
-
-
-                    if (typeTable == "Restauration.SalarieChefCuisine")
-                        salarieAjoute = new SalarieChefCuisine(numero, ressource);
-                    else if (typeTable == "Restauration.SalarieChefPartie")
-                        salarieAjoute = new SalarieChefPartie(numero, ressource);
-                    else
-                        salarieAjoute = new SalarieCommis(numero, ressource);
-
-                    this._listeSalaries.Add(salarieAjoute);
-
+                    //On ajoute chaque table utilisée par la resevation dans la listes.
+                    tablesReservee.Add(_listeTables.Find(x => x._numTable == int.Parse(table.InnerText)));
                 }
-            }
-            catch (Exception)
-            {
 
+                reservationAjout = new Reservation(numeroReservation, nomClient, numeroClient, dateReservation, nombreConvives, formuleRetenue, tablesReservee);
+                Console.WriteLine(reservationAjout);
+                Console.ReadLine();
+                this._listeReservations.Add(reservationAjout);
 
             }
 
