@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 
 namespace Restauration
+
 {
+    /// <summary>
+    /// Classe représantant un commis qui hérite de Salarie
+    /// </summary>
     class SalarieCommis : Salarie
     {
         public SalarieCommis () : base(50){}

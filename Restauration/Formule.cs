@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace Restauration
 {
+    /// <summary>
+    /// Classe abstraite dont vont hériter les différentes classes qui correspondront aux formule de notre restaurant.
+    /// </summary>
     abstract class Formule
     {
         public String _nomFormule { get; protected set; }
@@ -15,6 +18,16 @@ namespace Restauration
         public DateTime _dureePreparation { get; protected set; }
         protected double _prix { get; set; }
         public int _ressource { get; protected set; }
+
+        /// <summary>
+        /// Constructeur de la classe formule
+        /// </summary>
+        /// <param name="nomFormule">Nom de la formule</param>
+        /// <param name="dureePresence">Durée de présence nécessaire pour la totalité du repas
+        /// en incluant le temps de préparation</param>
+        /// <param name="dureePreparation">Temps nécessaire à la réalisation du menu en cuisine</param>
+        /// <param name="prix">Prix du menu</param>
+        /// <param name="ressource">Ressource necessaire afin de préparer le menu en cuisine</param>
         public Formule(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource)
         {
             _numFormule = _numTotale + 1;
@@ -25,6 +38,11 @@ namespace Restauration
             _prix = prix;
             _ressource = ressource;
         }
+        
+        /// <summary>
+        /// Fonction surchargée s'occupant de l'affichage d'une formule
+        /// </summary>
+        /// <returns>Une chaîne de caractère décrivant la formule</returns>
         public override string ToString()
         {
             string ch = "";
@@ -32,6 +50,12 @@ namespace Restauration
             return ch;
         }
 
+        /// <summary>
+        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différent Noeud Xml qui caractériserons un menu
+        /// ainsi que la valeur de ces noeuds
+        /// </summary>
+        /// <param name="saveRestau">Un XmlDocument qui représente le document Xml qui sera sauvegardé</param>
+        /// <param name="listeFormules">Un XmlNode représentant une listes de formules dans notre fichiers Xml</param>
         public void sauvegardeFormule(XmlDocument saveRestau, XmlNode listeFormules)
         {
             //On crée un noeud racine qui correspondra à une formule
@@ -49,7 +73,7 @@ namespace Restauration
             XmlNode prix = saveRestau.CreateElement("prix");
             XmlNode ressource = saveRestau.CreateElement("ressource");
 
-
+            //On indique les différentes valeurs de chaque Noeud
             numFormule.InnerText = this._numFormule.ToString(); ;
             nomFormule.InnerText = this._nomFormule;
             dureePresence.InnerText = this._dureePresence.ToShortTimeString();
@@ -57,6 +81,7 @@ namespace Restauration
             prix.InnerText = this._prix.ToString();
             ressource.InnerText = this._ressource.ToString();
 
+            //On ajoute chacun de ces noeud au noeud formule
             rootFormule.AppendChild(numFormule);
             rootFormule.AppendChild(nomFormule);
             rootFormule.AppendChild(dureePresence);

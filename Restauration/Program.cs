@@ -5,14 +5,22 @@ using System.Text;
 
 namespace Restauration
 {
+    /// <summary>
+    /// Fonction principale du programme qui contiendra le Main ainsi que les affichages des menus et autres informations
+    /// </summary>
     class Program
     {
+
         static void Main(string[] args)
         {
+            ///On lance la fonction Menubase afin de savoir ce que désire l'utilisateur
+            ///Cette fonction retourna true si l'on crée un nouveau restaurant et retournera false si 
+            ///on désie en chargé un
             bool premierChoix = MenuBase();
             bool quitteLogiciel = false;
             Restaurant restaurant = null;
 
+            ///On regarde le premier choix de l'utilisateur
             if (premierChoix)
                 restaurant = nouveauRestaurant();
             else
@@ -20,9 +28,15 @@ namespace Restauration
                 restaurant = chargementRestaurant();
             }
 
+            ///On rentre dans la boucle de Menu que l'on ne quittera que lorsque l'on quittera le programme
             while (!quitteLogiciel)
             {
-                int choix = choixMenuPrincipal(restaurant); 
+                ///On récupère un entier correspondant au choix de l'utilisateur
+                int choix = choixMenuPrincipal(restaurant);
+                ///L'on effectue un switch sur ce choix,
+                ///si le choix necessite l'ouvertur d'un nouveau menu,
+                ///on l'affichera et on fera un nouveau switch sur le choix
+                ///de l'utilisateur
                 switch (choix)
                 {
                     case 1:
@@ -104,6 +118,10 @@ namespace Restauration
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Fonction qui va afficher le premier menu du programme
+        /// </summary>
+        /// <returns>True si l'on crée un nouveau restaurant, false si l'on souhaite en charger un</returns>
         static bool MenuBase()
         {
             while(true)
@@ -125,6 +143,11 @@ namespace Restauration
             }
         }
 
+
+        /// <summary>
+        /// Menu de création d'un nouveau restaurant
+        /// </summary>
+        /// <returns>le restaurant nouvellement crée</returns>
         static Restaurant nouveauRestaurant()
         {
             Console.WriteLine("Veuillez renseigner le nom de votre restaurant");
@@ -135,6 +158,10 @@ namespace Restauration
             return restaurant;
         }
 
+        /// <summary>
+        /// Menu de Chargement de Restaurant
+        /// </summary>
+        /// <returns>Le Restaurant chargé</returns>
         public static Restaurant chargementRestaurant()
         {
             String nomRestaurant;
@@ -152,7 +179,12 @@ namespace Restauration
 
 
         }
-
+        
+        /// <summary>
+        /// Affichage du Menu principale
+        /// </summary>
+        /// <param name="restaurant">Le restaurant concerné par l'application</param>
+        /// <returns>un entier symbolisant le choix de l'utilisateur</returns>
         public static int choixMenuPrincipal(Restaurant restaurant)
         {
             int choix;
@@ -173,6 +205,11 @@ namespace Restauration
             return choix;
         }
 
+        /// <summary>
+        /// Affichage du menu de choix d'actions sur les tables
+        /// </summary>
+        /// <param name="restaurant">Le restaurant concerné par l'application</param>
+        /// <returns>un entier symbolisant le choix de l'utilisateur</returns>
         public static int choixMenuTable(Restaurant restaurant)
         {
             int choixTable;
@@ -191,6 +228,11 @@ namespace Restauration
             return choixTable;
         }
 
+        /// <summary>
+        /// Affichage du menu de choix d'actions sur les formules
+        /// </summary>
+        /// <param name="restaurant">Le restaurant concerné par l'application</param>
+        /// <returns>un entier symbolisant le choix de l'utilisateur</returns>
         public static int choixMenuFormule(Restaurant restaurant)
         {
             int choixFormule;
@@ -209,6 +251,11 @@ namespace Restauration
             return choixFormule;
         }
 
+        /// <summary>
+        /// Affichage du menu de choix d'actions sur les salariés
+        /// </summary>
+        /// <param name="restaurant">Le restaurant concerné par l'application</param>
+        /// <returns>un entier symbolisant le choix de l'utilisateur</returns>
         public static int choixMenuSalarie(Restaurant restaurant)
         {
             int choixSalarie;
@@ -227,6 +274,11 @@ namespace Restauration
             return choixSalarie;
         }
 
+        /// <summary>
+        /// Affichage du menu de choix d'actions sur les reservations
+        /// </summary>
+        /// <param name="restaurant">Le restaurant concerné par l'application</param>
+        /// <returns>un entier symbolisant le choix de l'utilisateur</returns>
         public static int choixMenuReservation(Restaurant restaurant)
         {
             int choixReservation;

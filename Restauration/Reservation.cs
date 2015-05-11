@@ -6,6 +6,9 @@ using System.Xml;
 
 namespace Restauration
 {
+    /// <summary>
+    /// Classe qui va symboliser les reservations dans notre solutions
+    /// </summary>
     class Reservation
     {
         public int _numeroReservation { get; private set; }
@@ -17,6 +20,14 @@ namespace Restauration
         private String _formuleRetenue { get; set; }
         public List<Table> _listeTablesReserve { get; set; }
 
+        /// <summary>
+        /// Constructeur de reservations
+        /// </summary>
+        /// <param name="_nomClient">Nom du client</param>
+        /// <param name="_numeroTelephone">Son numéro de téléphone</param>
+        /// <param name="_dateReservation">Date de resrvation du client</param>
+        /// <param name="_nbConvives">Nombre de convives</param>
+        /// <param name="_formuleRetenue">Nom de la formule retenue</param>
         public Reservation(String _nomClient, String _numeroTelephone,
             DateTime _dateReservation, int _nbConvives, String _formuleRetenue)
         {
@@ -31,6 +42,11 @@ namespace Restauration
             
         }
 
+        /// <summary>
+        /// Second constructeur de Reservation qui sera utilisé lors du chargement de restaurant
+        /// </summary>
+        /// <param name="_numeroReservation">Le numéro de la reservation, attention dans ce cas il faut
+        /// bien penser à incrementer de 1 le membre statique</param>
         public Reservation(int _numeroReservation, String _nomClient, String _numeroTelephone,
             DateTime _dateReservation, int _nbConvives, String _formuleRetenue, List<Table> _listeTablesReserve)
         {
@@ -45,6 +61,10 @@ namespace Restauration
             
         }
 
+        /// <summary>
+        /// Fontion surchargé qui va s'occuper de l'affichage de la reservation
+        /// </summary>
+        /// <returns>Une chaîne de caractère décrivant la reservation</returns>
         public override string ToString()
         {
             String res;
@@ -63,6 +83,15 @@ namespace Restauration
             return res;
         }
 
+        /// <summary>
+        /// Cette fonction va vérifier que suffisemment de ressource (en salle et en cuisine) sont disponible 
+        /// pour enregistrer cette reservation
+        /// </summary>
+        /// <param name="nomFormule">La Formule retenue</param>
+        /// <param name="nbConvives">La nombre de convive</param>
+        /// <param name="dateReservation">La date de reservation</param>
+        /// <param name="R">Le restaurant du programme</param>
+        /// <returns></returns>
         public bool GestionReservation (string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
         {
             Console.WriteLine("gestionreservation");
@@ -77,16 +106,10 @@ namespace Restauration
                 return false;
             }
 
+            //On va récupérer une listes de tables disponibles à cette périodes pour la reservations
             tablesLibre = rechercheTableLibre(nbConvives, R, dateReservation,nomFormule);
-            Console.WriteLine("Nombre de table libre " + tablesLibre.Count);
 
-            foreach (Table table in tablesLibre)
-            {
-                Console.WriteLine(table.ToString()); 
-            }
-            Console.ReadLine();
-
-
+            //Si aucune table n'est disponible on retourne false
             if(tablesLibre.Count == 0)
             {
                 Console.WriteLine("Aucun tables n'est disponible pour cette horaire");
@@ -94,12 +117,21 @@ namespace Restauration
                 return false;
             }
 
+            //On va récupèrer la listes tables choisis pour cette reservations
             this._listeTablesReserve = rechercheTableReservation(nbConvives, tablesLibre);
 
+            //On retourne true
             return true;
         }
 
-        //Cette fonction va vérifier si le personnel peut prendre en compte la commande
+        /// <summary>
+        /// Cette fonction va vérifier si l'on dispose des ressource en cuisine pour l'assurer
+        /// </summary>
+        /// <param name="nomFormule">La Formule retenue</param>
+        /// <param name="nbConvives">La nombre de convive</param>
+        /// <param name="dateReservation">La date de reservation</param>
+        /// <param name="R">Le restaurant du programme</param>
+        /// <returns>True si la cuisinepeut assurer la reservation flase sinon</returns>
         public bool verificationCuisine(string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
         {
             int ressourcePreparation = 0;
@@ -147,7 +179,14 @@ namespace Restauration
                 return true;
         }
 
-        //Cette fonction va retourner la listes des tables libre à la période de la reservation
+        /// <summary>
+        /// Cette fonction va retourner les tables libres pour la période de reservation
+        /// </summary>
+        /// <param name="nomFormule">La Formule retenue</param>
+        /// <param name="nbConvives">La nombre de convive</param>
+        /// <param name="dateReservation">La date de reservation</param>
+        /// <param name="R">Le restaurant du programme</param>
+        /// <returns>Une liste de Table</returns>
         public List<Table> rechercheTableLibre(int nbConvives, Restaurant R, DateTime dateReservation, String nomFormule)
         {
             List<Table> tableReserves = new List<Table>();
@@ -213,6 +252,12 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Cette fonction va intéragir avec l'utilisateur afin de sélectionner les tables pour la reservation
+        /// </summary>
+        /// <param name="nbConvives">La nombre de convive</param>
+        /// <param name="tablesLibre">la liste des tables vides</param>
+        /// <returns></returns>
         public List<Table> rechercheTableReservation(int nbConvive, List<Table> tablesLibre)
         {
             List<Table> tablesReservations = new List<Table>();
@@ -221,32 +266,40 @@ namespace Restauration
             int nbPlaceCarreeTotale = 0;
             int nbPlaceRectangulaireTotale = 0;
 
+            ///On va regarder si le total des tables caree peut loger tous les convives
             foreach (Table table in tablesLibre)
             {
                 if (table.GetType().ToString() == "Restauration.TableCarree")
                     nbPlaceCarreeTotale += table._nbPlacesMax;
             }
 
+            ///Si la réponse est non, on supprime les tables carées de la listes des
+            ///tables carrées libres
             if (nbPlaceCarreeTotale < nbConvive)
             {
                 tablesReservations.RemoveAll(x => x.GetType().ToString() == "Restauration.TableCarree");
             }
 
-
+            ///On va regarder si le total des tables rectangulaire peut loger tous les convives
             foreach (Table table in tablesLibre)
             {
                 if (table.GetType().ToString() == "Restauration.TableRectangulaire")
                     nbPlaceRectangulaireTotale += table._nbPlacesMax;
             }
 
+            ///Si la réponse est non, on supprime les tables carées de la listes des
+            ///tables rectangulaire libres
             if (nbPlaceRectangulaireTotale < nbConvive)
             {
                 tablesReservations.RemoveAll(x => x.GetType().ToString() == "Restauration.TableRectangulaire");
             }
 
+            ///Si la liste des tables libres est vide, 
+            ///on retourne alors une listes vide
             if (tablesLibre.Count == 0)
                 return tablesReservations;
 
+            ///On affiche la listes de tables disponible
             Console.WriteLine("Voici la listes des tables disponibles : ");
             foreach (Table table in tablesLibre)
             {
@@ -254,6 +307,7 @@ namespace Restauration
             }
 
             
+            ///On fait selectionner une table à l'utilisateur
             while (!numOk)
             {
                 Console.WriteLine("Entrez le numéro de la table que vous souhaitez utiliser");
@@ -270,6 +324,7 @@ namespace Restauration
             //On retire des tables libres la tables que l'on vient de choisir
             tablesLibre.RemoveAll(x => x._numTable == numeroTable);
 
+            ///Si la somme des tables choisis est inférieurs au nombres de convives, on continue de proposer un jumelage à l'utilisateurs.
             while (tablesReservations.Sum(x => x._nbPlacesMax) < nbConvive)
             {
                 numOk = false;
@@ -298,6 +353,13 @@ namespace Restauration
             return tablesReservations;
         }
 
+
+        /// <summary>
+        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différent Noeud Xml qui caractériserons une reservation
+        /// ainsi que la valeur de ces noeuds
+        /// </summary>
+        /// <param name="saveRestau">Un XmlDocument qui représente le document Xml qui sera sauvegardé</param>
+        /// <param name="listeReservations">Un XmlNode représentant une listes de reservation dans notre fichiers Xml</param>
         public void sauvegardeReservation(XmlDocument saveRestau, XmlNode listeReservations)
         {
             //On crée un noeud racine qui correspondra à une reservation

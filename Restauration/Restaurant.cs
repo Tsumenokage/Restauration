@@ -7,6 +7,10 @@ using System.Text.RegularExpressions;
 
 namespace Restauration
 {
+    /// <summary>
+    /// Classe principale est unique, il n'y aura qu'une seule instance de la classe restaurant sur laquelle on travaillera 
+    /// pendant l'utilisation du programme
+    /// </summary>
     class Restaurant
     {
         public String _nomRestaurant { get; private set; }
@@ -21,6 +25,10 @@ namespace Restauration
             Rectangulaire
         };
 
+        /// <summary>
+        /// Constructeur de Restaurant
+        /// </summary>
+        /// <param name="_nomRestaurant">String représant le nom du Restaurant</param>
         public Restaurant(String _nomRestaurant)
         {
             this._nomRestaurant = _nomRestaurant;
@@ -30,6 +38,9 @@ namespace Restauration
             _listeSalaries      = new List<Salarie>();
         }   
 
+        /// <summary>
+        /// Cette fonction va intégagir avec l'utilisateur afin de créer une nouvelle Table
+        /// </summary>
         public void AjoutTable()
         {
             Console.Clear();
@@ -61,6 +72,10 @@ namespace Restauration
             }
         }
  
+        /// <summary>
+        /// Cette fonction va afficher le questionnaire afin de créer une table
+        /// </summary>
+        /// <param name="typeTable">Le type de table voulu par l'utilisateur</param>
         private void questionnaireAjoutTable(_typeTable typeTable)
         {
             //Console.Clear();
@@ -114,6 +129,9 @@ namespace Restauration
             
         }
 
+        /// <summary>
+        /// Cette fonction va intéragir avec l'utilisateur afin de supprimer une table
+        /// </summary>
         public void SupprimerTable()
         {
             bool numOk = false;
@@ -142,6 +160,9 @@ namespace Restauration
             _listeTables.Remove(tableASupprimer);
         }
 
+        /// <summary>
+        /// Cette fonction va lister l'ensemble des tables de Restaurant
+        /// </summary>
         public void listeTables()
         {
             Console.WriteLine("Liste des tables du restaurant : ");
@@ -152,6 +173,9 @@ namespace Restauration
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Cette fonction va intéragir aveck'utilisateur afin de créer une nouvelle formule
+        /// </summary>
         public void AjoutFormule()
         {
             bool verification = false;
@@ -234,6 +258,9 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Cette fonction va intéragir avec l'utilisateur afin de supprimer une formule
+        /// </summary>
         public void supprimerFormule()
         {
             bool numOk = false;
@@ -262,6 +289,9 @@ namespace Restauration
             this._listeFormules.Remove(formuleASupprimer);
         }
 
+        /// <summary>
+        /// Cette fonction va afficher toutes les formules de restaurant
+        /// </summary>
         public void listeFormules()
         {
             Console.Clear();
@@ -273,6 +303,10 @@ namespace Restauration
             Console.ReadLine();
         }
 
+        /// <summary>
+        ///Cette fonction va questionner l'utilisateur sur le temps de préparation d'une formule
+        /// </summary>
+        /// <returns>Un DateTime représantant le temps de préparation</returns>
         public DateTime tempsPreparation()
         {
             DateTime dureePreparation = new DateTime();
@@ -285,6 +319,10 @@ namespace Restauration
             return dureePreparation;
         }
 
+        /// <summary>
+        ///Cette fonction va questionner l'utilisateur sur le temps de présence d'une formule
+        /// </summary>
+        /// <returns>Un DateTime représantant le temps de présence</returns>
         public DateTime tempsPresence()
         {
             DateTime dureePresence = new DateTime();
@@ -303,6 +341,10 @@ namespace Restauration
             return dureePresence;
         }
 
+        /// <summary>
+        /// Cette fonction va quesitonner l'utilisateur sur le prix d'une formule
+        /// </summary>
+        /// <returns>Le prix de la formule en double</returns>
         public double prixFormule()
         {
             double price;
@@ -321,6 +363,11 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Va questionner l'utilisateur sur les ressources nécessaires
+        /// à la préparation d'une formule
+        /// </summary>
+        /// <returns></returns>
         public int ressourceFormule()
         {
             int ressource;
@@ -331,6 +378,9 @@ namespace Restauration
             return ressource;
         }
 
+        /// <summary>
+        /// Cette fonction va gérere l'ajout de réservations
+        /// </summary>
         public void AjoutReservation()
         {
             String nomClient;
@@ -418,9 +468,14 @@ namespace Restauration
             }
         }
 
-        //Mettre en place des expression régulière pour vérifier si le format entrer est correcte
+        /// <summary>
+        /// Cette fonction va questionner l'utilisateur sur la date et heure de la reservation à ajouter
+        /// </summary>
+        /// <returns></returns>
         public DateTime dateReservation()
         {
+            ///Ces expression régulière sont là pour vérifier ques les dates et les heures sont rentrés au bons format
+            ///jj/mm/aaaa pour la date et hh:mm pour l'heure
             System.Text.RegularExpressions.Regex myRegexDate = new Regex(@"^\d{1,2}\/\d{1,2}\/\d{4}$");
             System.Text.RegularExpressions.Regex myRegexHeure = new Regex(@"([0-1][0-9]|2[0-3]):[0-5][0-9]");
             DateTime dateReservation;
@@ -450,6 +505,9 @@ namespace Restauration
             return dateReservation;
         }
 
+        /// <summary>
+        /// Cette fonction va s'occuper dela suppression d'une reservation
+        /// </summary>
         public void supprimerReservation()
         {
             bool numOk = false;
@@ -478,6 +536,9 @@ namespace Restauration
             this._listeReservations.Remove(reservationASupprimer);
         }
 
+        /// <summary>
+        /// Cette fonction va lister l'ensemble des reservations 
+        /// </summary>
         public void listeReservation()
         {
             Console.Clear();
@@ -490,6 +551,9 @@ namespace Restauration
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Cette fonction va rechercher une reservation qui à pour nom de client celui rechercher par l'utilisateur
+        /// </summary>
         public void rechercheReservationNom()
         {
             String nomReservation;
@@ -512,6 +576,9 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Cette fonction va intéragir avec un utilisateur pour ajouter un salarié
+        /// </summary>
         public void AjoutSalarie()
         {
             bool verification = false;
@@ -551,6 +618,9 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Cette fonction va permmetre la suppression d'un salarié
+        /// </summary>
         public void supprimerSalarie()
         {
             bool numOk = false;
@@ -579,6 +649,9 @@ namespace Restauration
             this._listeSalaries.Remove(salarieASupprimer);
         }
 
+        /// <summary>
+        /// Cette fonction va lister tous les salariés de Restaurant
+        /// </summary>
         public void listeSalarie()
         {
             Console.Clear();
@@ -590,6 +663,10 @@ namespace Restauration
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Cette fonction va demander à l'utilisateur de confirmer une action
+        /// </summary>
+        /// <returns>true si l'utilisateur valide l'action et false sinon</returns>
         public bool validationOperation()
         {
             bool saisieOk = false;
@@ -607,6 +684,9 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Cette fonction va sauvegarder les informations du estaurant courant au format Xml
+        /// </summary>
         public void sauvegardeRestaurant()
         {
             XmlDocument saveRestau = new XmlDocument();
@@ -657,10 +737,15 @@ namespace Restauration
 
         }
 
+        /// <summary>
+        /// Cette fonction va charger un fichier Xml correspondant à un restaurant
+        /// </summary>
+        /// <returns>un bool indiquant si le chargement est un succès ou un échèque</returns>
         public bool ChargementRestaurant()
         {
             XmlDocument xmlDoc = new XmlDocument();
 
+           ///On essaie d'ouvrir le fichier xml et si l'on ne peut aps on lève une Exception
             try
             {
                 xmlDoc.Load(this._nomRestaurant + ".xml");

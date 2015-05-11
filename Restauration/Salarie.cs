@@ -6,11 +6,20 @@ using System.Xml;
 
 namespace Restauration
 {
+
+    /// <summary>
+    /// Classe abstraite dont vont hériter les différentes classes qui correspondront aux salariés de notre restaurant.
+    /// </summary>
     class Salarie
     {
         public int _numSalarie { get; protected set; } //numéro de la formule
         protected static int _numTotale;
         public int _ressource { get; protected set; }
+
+        /// <summary>
+        /// Constructeur de salarié
+        /// </summary>
+        /// <param name="ressource">Les ressource en cuisine du salarié</param>
         public Salarie (int ressource)
         {
             _numSalarie = _numTotale + 1;
@@ -18,6 +27,9 @@ namespace Restauration
             _ressource = ressource;
         }
 
+        /// <summary>
+        /// Constructeur de salariés essentiellement utilisés dans le chargement
+        /// </summary>
         public Salarie(int numero, int ressource)
         {
             _numSalarie = numero;
@@ -25,12 +37,23 @@ namespace Restauration
             _ressource = ressource;
         }
 
+        /// <summary>
+        /// Cette fonction vaafficher les informations d'un salariés
+        /// </summary>
+        /// <returns>Chaîne caractérisant un salarié</returns>
         public override string ToString()
         {
             string ch = "";
             ch += "utilise "+ _ressource +" ressources";
             return ch;
         }
+
+        /// <summary>
+        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différent Noeud Xml qui caractériserons un salarie
+        /// ainsi que la valeur de ces noeuds
+        /// </summary>
+        /// <param name="saveRestau">Un XmlDocument qui représente le document Xml qui sera sauvegardé</param>
+        /// <param name="listeSalaries">Un XmlNode représentant une liste de salariés dans notre fichiers Xml</param>
         public void sauvegardeSalarie(XmlDocument saveRestau, XmlNode listeSalaries)
         {
             //On crée un noeud racine qui correspondra à un salarié
