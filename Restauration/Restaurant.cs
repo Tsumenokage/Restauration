@@ -341,6 +341,10 @@ namespace Restauration
             bool verification = false;
             ConsoleKeyInfo saisie;
 
+            System.Text.RegularExpressions.Regex myRegexTelephone = new Regex(@"0[1-9][0-9]{8}");
+
+
+
             Console.Clear();
             Console.WriteLine("******************************************");
             Console.WriteLine(this._nomRestaurant);
@@ -348,8 +352,11 @@ namespace Restauration
             Console.WriteLine("Ajout d'une reservation");
             Console.WriteLine("Entrer le nom du client :");
             nomClient = Console.ReadLine();
-            Console.WriteLine("Entrer son numéro de téléphone : ");
-            numTelephone = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Entrer son numéro de téléphone : ");
+                numTelephone = Console.ReadLine();
+            } while (!myRegexTelephone.IsMatch(numTelephone));
             dateReservationClient = dateReservation();
 
             do
@@ -416,24 +423,30 @@ namespace Restauration
         {
             System.Text.RegularExpressions.Regex myRegexDate = new Regex(@"^\d{1,2}\/\d{1,2}\/\d{4}$");
             System.Text.RegularExpressions.Regex myRegexHeure = new Regex(@"([0-1][0-9]|2[0-3]):[0-5][0-9]");
+            DateTime dateReservation;
 
             String date = "";
             String heure = "";
 
             do
             {
-                Console.WriteLine("Date de la reservation : (format jj/mm/aaaa)");
-                date = Console.ReadLine();
-            } while (!myRegexDate.IsMatch(date));
+                do
+                {
+                    Console.WriteLine("Date de la reservation : (format jj/mm/aaaa)");
+                    date = Console.ReadLine();
+                } while (!myRegexDate.IsMatch(date));
 
-            do
-            {
-                Console.WriteLine("Heure de la reservation : (format hh:mm)");
-                heure = Console.ReadLine();
-            } while (!myRegexHeure.IsMatch(heure));
 
-            date += " " + heure;
-            DateTime dateReservation = Convert.ToDateTime(date);
+                do
+                {
+                    Console.WriteLine("Heure de la reservation : (format hh:mm)");
+                    heure = Console.ReadLine();
+                } while (!myRegexHeure.IsMatch(heure));
+
+                date += " " + heure;
+                dateReservation = Convert.ToDateTime(date);
+            } while (dateReservation < DateTime.Now);
+
             return dateReservation;
         }
 
