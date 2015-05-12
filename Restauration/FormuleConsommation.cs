@@ -11,7 +11,7 @@ namespace Restauration
     class FormuleConsommation : Formule
     {
         /// <summary>
-        /// Ce constructeur va prendre les même paramètre que le constructeur de la classe <see cref="Formule"/>Formule</see>
+        /// Ce constructeur va prendre les même paramètres que le constructeur de la classe <see cref="Formule"/>Formule</see>
         /// </summary>
         public FormuleConsommation(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource) : base(nomFormule, dureePresence, dureePreparation, prix, ressource) { }
 

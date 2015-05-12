@@ -7,7 +7,7 @@ using System.Xml;
 namespace Restauration
 {
     /// <summary>
-    /// Classe abstraite dont vont hériter les différentes classes qui correspondront aux formule de notre restaurant.
+    /// Classe abstraite dont vont hériter les différentes classes qui correspondront aux formules de notre restaurant.
     /// </summary>
     abstract class Formule
     {
@@ -27,7 +27,7 @@ namespace Restauration
         /// en incluant le temps de préparation</param>
         /// <param name="dureePreparation">Temps nécessaire à la réalisation du menu en cuisine</param>
         /// <param name="prix">Prix du menu</param>
-        /// <param name="ressource">Ressource necessaire afin de préparer le menu en cuisine</param>
+        /// <param name="ressource">Ressource nécessaire afin de préparer le menu en cuisine</param>
         public Formule(String nomFormule, DateTime dureePresence, DateTime dureePreparation, double prix, int ressource)
         {
             _numFormule = _numTotale + 1;
@@ -51,7 +51,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différent Noeud Xml qui caractériserons un menu
+        /// Cette fonction va permettre d'enregistrer dans un XmlDocument les différents Noeud Xml qui caractériseront un menu
         /// ainsi que la valeur de ces noeuds
         /// </summary>
         /// <param name="saveRestau">Un XmlDocument qui représente le document Xml qui sera sauvegardé</param>
@@ -81,7 +81,7 @@ namespace Restauration
             prix.InnerText = this._prix.ToString();
             ressource.InnerText = this._ressource.ToString();
 
-            //On ajoute chacun de ces noeud au noeud formule
+            //On ajoute chacun de ces noeuds au noeud formule
             rootFormule.AppendChild(numFormule);
             rootFormule.AppendChild(nomFormule);
             rootFormule.AppendChild(dureePresence);

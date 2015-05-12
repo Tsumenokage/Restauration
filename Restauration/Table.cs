@@ -17,7 +17,7 @@ namespace Restauration
         public int _nbPlacesMax { get; protected set; } //nombre de place maximum de la table
         public bool _jumelage { get; protected set; } //O ou N en fonction de si la table peut être jumelée ou non
 
-        public Table(int nbPlaceMax, bool jumelage)//contructeur de la classe table
+        public Table(int nbPlaceMax, bool jumelage)//constructeur de la classe table
         {
             _numTable = _numTotale + 1;
             _numTotale++;
@@ -33,10 +33,6 @@ namespace Restauration
             _jumelage = jumelage;
         }
 
-        /// <summary>
-        /// Cette fonction vaafficher les informations d'un salariés
-        /// </summary>
-        /// <returns>Chaîne caractérisant un salarié</returns>
         public override string ToString()
         {
             string ch = "";
@@ -45,11 +41,11 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différent Noeud Xml qui caractériserons une table
+        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différents Noeud Xml qui caractériseront une table
         /// ainsi que la valeur de ces noeuds
         /// </summary>
         /// <param name="saveRestau">Un XmlDocument qui représente le document Xml qui sera sauvegardé</param>
-        /// <param name="listeTables">Un XmlNode représentant une liste de salariés dans notre fichiers Xml</param>
+        /// <param name="listeTables">Un XmlNode représentant une liste de tables dans notre fichier Xml</param>
         public void sauvegardeTable(XmlDocument saveRestau, XmlNode listeTables)
         {
             //On crée un noeud racine qui correspondra à une table

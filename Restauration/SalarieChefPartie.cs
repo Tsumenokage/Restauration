@@ -6,7 +6,7 @@ using System.Text;
 namespace Restauration
 {
     /// <summary>
-    /// Classe représantant une Chef Partie qui hérite de Salarie
+    /// Classe représantant une Chef de Partie qui hérite de Salarie
     /// </summary>
     class SalarieChefPartie : Salarie
     {

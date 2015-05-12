@@ -28,7 +28,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Constructeur de salariés essentiellement utilisés dans le chargement
+        /// Constructeur de salarié essentiellement utilisé dans le chargement
         /// </summary>
         public Salarie(int numero, int ressource)
         {
@@ -38,7 +38,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction vaafficher les informations d'un salariés
+        /// Cette fonction va afficher les informations d'un salarié
         /// </summary>
         /// <returns>Chaîne caractérisant un salarié</returns>
         public override string ToString()
@@ -49,11 +49,11 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va permettre de d'enregistrer dans un XmlDocument les différent Noeud Xml qui caractériserons un salarie
+        /// Cette fonction va permettre d'enregistrer dans un XmlDocument les différents Noeud Xml qui caractériseront un salarie
         /// ainsi que la valeur de ces noeuds
         /// </summary>
         /// <param name="saveRestau">Un XmlDocument qui représente le document Xml qui sera sauvegardé</param>
-        /// <param name="listeSalaries">Un XmlNode représentant une liste de salariés dans notre fichiers Xml</param>
+        /// <param name="listeSalaries">Un XmlNode représentant une liste de salariés dans notre fichier Xml</param>
         public void sauvegardeSalarie(XmlDocument saveRestau, XmlNode listeSalaries)
         {
             //On crée un noeud racine qui correspondra à un salarié

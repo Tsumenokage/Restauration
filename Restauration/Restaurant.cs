@@ -50,7 +50,7 @@ namespace Restauration
             Console.WriteLine("Gestion des tables : Ajout de tables");
             Console.WriteLine("Voulez-vous continuer une table carrée(c), ronde(n) ou rectangulaire(r) ?");
             ConsoleKeyInfo saisie = Console.ReadKey(true);
-            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules
             {
                 Console.WriteLine("Vous avez selectionné une table carrée");
                 questionnaireAjoutTable(_typeTable.Carre);
@@ -174,7 +174,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va intéragir aveck'utilisateur afin de créer une nouvelle formule
+        /// Cette fonction va intéragir avec l'utilisateur afin de créer une nouvelle formule
         /// </summary>
         public void AjoutFormule()
         {
@@ -197,7 +197,7 @@ namespace Restauration
                 if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.A || saisie.Key == ConsoleKey.G || saisie.Key == ConsoleKey.N || saisie.Key == ConsoleKey.R)
                     verification = true;
             } while (verification == false);
-            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules
             {
                 Console.WriteLine("Vous avez selectionné une formule consommation");
                 nomFormule = "consommation";
@@ -342,9 +342,9 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va quesitonner l'utilisateur sur le prix d'une formule
+        /// Cette fonction va questionner l'utilisateur sur le prix d'une formule
         /// </summary>
-        /// <returns>Le prix de la formule en double</returns>
+        /// <returns>Le prix de la formule est un double</returns>
         public double prixFormule()
         {
             double price;
@@ -379,7 +379,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va gérere l'ajout de réservations
+        /// Cette fonction va gérer l'ajout de réservations
         /// </summary>
         public void AjoutReservation()
         {
@@ -424,7 +424,7 @@ namespace Restauration
                     if (saisie.Key == ConsoleKey.C || saisie.Key == ConsoleKey.A || saisie.Key == ConsoleKey.G || saisie.Key == ConsoleKey.N || saisie.Key == ConsoleKey.R)
                         verification = true;
                 } while (verification == false);
-                if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+                if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules
                 {
                     nomFormule = "consommation";
                 }
@@ -474,7 +474,7 @@ namespace Restauration
         /// <returns></returns>
         public DateTime dateReservation()
         {
-            ///Ces expression régulière sont là pour vérifier ques les dates et les heures sont rentrés au bons format
+            ///Ces expressions régulière sont là pour vérifier ques les dates et les heures sont rentrées au bons format
             ///jj/mm/aaaa pour la date et hh:mm pour l'heure
             System.Text.RegularExpressions.Regex myRegexDate = new Regex(@"^\d{1,2}\/\d{1,2}\/\d{4}$");
             System.Text.RegularExpressions.Regex myRegexHeure = new Regex(@"([0-1][0-9]|2[0-3]):[0-5][0-9]");
@@ -506,7 +506,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va s'occuper dela suppression d'une reservation
+        /// Cette fonction va s'occuper de la suppression d'une reservation
         /// </summary>
         public void supprimerReservation()
         {
@@ -552,7 +552,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va rechercher une reservation qui à pour nom de client celui rechercher par l'utilisateur
+        /// Cette fonction va rechercher une reservation qui à pour nom de client celui recherché par l'utilisateur
         /// </summary>
         public void rechercheReservationNom()
         {
@@ -596,7 +596,7 @@ namespace Restauration
                     verification = true;
             } while (verification == false);
             Salarie salarieAjoute = null;
-            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules...
+            if (saisie.Key == ConsoleKey.C)//ne distingue pas les majuscules ou minuscules
             {
                 Console.WriteLine("Vous avez selectionné un chef de cuisine");
                 salarieAjoute = new SalarieChefCuisine();
@@ -619,7 +619,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va permmetre la suppression d'un salarié
+        /// Cette fonction va permettre la suppression d'un salarié
         /// </summary>
         public void supprimerSalarie()
         {
@@ -685,7 +685,7 @@ namespace Restauration
         }
 
         /// <summary>
-        /// Cette fonction va sauvegarder les informations du estaurant courant au format Xml
+        /// Cette fonction va sauvegarder les informations du restaurant courant au format Xml
         /// </summary>
         public void sauvegardeRestaurant()
         {
@@ -714,7 +714,7 @@ namespace Restauration
 
             restaurantNode.AppendChild(listeFormules);
 
-            //Sauvegarde de la listes des employés
+            //Sauvegarde de la liste des employés
             XmlNode listeSalaries = saveRestau.CreateElement("listesSalaries");
             foreach (var salarie in _listeSalaries)
             {
@@ -745,7 +745,7 @@ namespace Restauration
         {
             XmlDocument xmlDoc = new XmlDocument();
 
-           ///On essaie d'ouvrir le fichier xml et si l'on ne peut aps on lève une Exception
+           ///On essaie d'ouvrir le fichier xml et si l'on ne peut pas on lève une Exception
             try
             {
                 xmlDoc.Load(this._nomRestaurant + ".xml");
@@ -871,14 +871,14 @@ namespace Restauration
                 int nombreConvives = int.Parse(reservation.SelectSingleNode("NombreConvives").InnerText);
                 String formuleRetenue = reservation.SelectSingleNode("formuleRetenue").InnerText;
 
-                //On s'occupe des tables utilisées par la reservations
+                //On s'occupe des tables utilisées par la reservation
                 List<Table> tablesReservee = new List<Table>();
 
                 XmlNodeList tablesReservations = reservation.SelectNodes("tablesReservees");
 
                 foreach (XmlNode table in tablesReservations)
                 {
-                    //On ajoute chaque table utilisée par la resevation dans la listes.
+                    //On ajoute chaque table utilisée par la resevation dans la liste.
                     tablesReservee.Add(_listeTables.Find(x => x._numTable == int.Parse(table.InnerText)));
                 }
 

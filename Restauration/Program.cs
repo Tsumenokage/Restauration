@@ -34,7 +34,7 @@ namespace Restauration
                 ///On récupère un entier correspondant au choix de l'utilisateur
                 int choix = choixMenuPrincipal(restaurant);
                 ///L'on effectue un switch sur ce choix,
-                ///si le choix necessite l'ouvertur d'un nouveau menu,
+                ///si le choix necessite l'ouverture d'un nouveau menu,
                 ///on l'affichera et on fera un nouveau switch sur le choix
                 ///de l'utilisateur
                 switch (choix)

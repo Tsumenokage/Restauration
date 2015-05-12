@@ -6,7 +6,7 @@ using System.Text;
 namespace Restauration
 {
     /// <summary>
-    /// Classe représantant un chef cuisine qui hérite de Salarie
+    /// Classe représantant un chef de cuisine qui hérite de Salarie
     /// </summary>
     class SalarieChefCuisine : Salarie
     {
@@ -19,7 +19,7 @@ namespace Restauration
 
 
         /// <summary>
-        /// Cette fonction vaafficher les informations d'un chef cuisine
+        /// Cette fonction va afficher les informations d'un chef cuisine
         /// </summary>
         /// <returns>Chaîne caractérisant un chef cuisine</returns>
         public override string ToString()
