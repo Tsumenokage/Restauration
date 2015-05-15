@@ -883,8 +883,6 @@ namespace Restauration
                 }
 
                 reservationAjout = new Reservation(numeroReservation, nomClient, numeroClient, dateReservation, nombreConvives, formuleRetenue, tablesReservee);
-                Console.WriteLine(reservationAjout);
-                Console.ReadLine();
                 this._listeReservations.Add(reservationAjout);
 
             }

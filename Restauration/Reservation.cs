@@ -151,7 +151,6 @@ namespace Restauration
                 ressourceNecessairePreparation = ressourceNecessairePreparation + form._ressource * nbConvives;
             }
 
-            Console.ReadLine();
 
             foreach (Reservation Reserve in R._listeReservations)
             {
