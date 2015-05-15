@@ -740,7 +740,7 @@ namespace Restauration
         /// <summary>
         /// Cette fonction va charger un fichier Xml correspondant à un restaurant
         /// </summary>
-        /// <returns>un bool indiquant si le chargement est un succès ou un échèque</returns>
+        /// <returns>un bool indiquant si le chargement est un succès ou un échec</returns>
         public bool ChargementRestaurant()
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -750,7 +750,7 @@ namespace Restauration
             {
                 xmlDoc.Load(this._nomRestaurant + ".xml");
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 Console.WriteLine("Fichier Xml inexistant");
                 return false;
