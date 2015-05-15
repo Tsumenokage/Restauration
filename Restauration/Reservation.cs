@@ -94,7 +94,6 @@ namespace Restauration
         /// <returns></returns>
         public bool GestionReservation (string nomFormule, int nbConvives, DateTime dateReservation, Restaurant R)
         {
-            Console.WriteLine("gestionreservation");
             List<Table> tablesLibre;
 
 
@@ -143,8 +142,6 @@ namespace Restauration
             {
                 ressourceSalarie += S._ressource;
             }
-            Console.WriteLine("Ressource totale du restaurant : " + ressourceSalarie);
-
 
             Formule form;
 
@@ -154,7 +151,6 @@ namespace Restauration
                 ressourceNecessairePreparation = ressourceNecessairePreparation + form._ressource * nbConvives;
             }
 
-            Console.WriteLine(ressourceNecessairePreparation);
             Console.ReadLine();
 
             foreach (Reservation Reserve in R._listeReservations)
@@ -168,8 +164,6 @@ namespace Restauration
                     ressourcePreparation += form._ressource * Reserve._nbConvives;
                 }
             }
-
-            Console.WriteLine(ressourcePreparation);
 
             if (ressourceNecessairePreparation > (ressourceSalarie - ressourcePreparation))
             {
